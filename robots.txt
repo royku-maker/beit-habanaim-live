@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://beithabanaim.co.il/sitemap.xml
