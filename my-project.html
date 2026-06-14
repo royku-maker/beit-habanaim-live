@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>פרויקט שלי | בית הבנאים</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      direction: rtl;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.10);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 64px;
+    }
+    .nav-logo img { height: 48px; display: block; }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: #1a1a1a;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: #1a56db; }
+    .nav-links a.active { color: #1a56db; font-weight: 700; border-bottom: 2px solid #1a56db; padding-bottom: 2px; }
+    .nav-hamburger { display: none; background: none; border: none; font-size: 26px; cursor: pointer; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 16px; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        right: 0; left: 0;
+        background: #fff;
+        flex-direction: column;
+        padding: 16px 24px;
+        gap: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,.12);
+      }
+      .nav-links.open { display: flex; }
+      .nav-hamburger { display: block; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1a56db 0%, #0e3a9e 100%);
+      color: #fff;
+      text-align: center;
+      padding: 60px 24px 48px;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; }
+    .hero p  { font-size: 1.1rem; font-weight: 400; opacity: .88; }
+
+    /* ── APP LAYOUT ── */
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 20px 16px;
+      height: fit-content;
+    }
+    .sidebar h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: #1a1a1a; }
+
+    .project-list { list-style: none; margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
+
+    .project-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #fff;
+      transition: background .15s, box-shadow .15s;
+      border: 2px solid transparent;
+    }
+    .project-item:hover { background: #e8eef9; }
+    .project-item.active { border-color: #1a56db; background: #e8eef9; }
+    .project-item-name { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .project-delete {
+      background: none; border: none; color: #999; font-size: 18px; cursor: pointer; padding: 0 4px; line-height: 1; opacity: 0; transition: opacity .15s, color .15s;
+    }
+    .project-item:hover .project-delete { opacity: 1; }
+    .project-delete:hover { color: #a51818; }
+
+    .new-project-btn {
+      width: 100%;
+      padding: 10px;
+      background: #1a56db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .new-project-btn:hover { background: #a51818; }
+
+    .new-project-input-wrap { display: none; margin-top: 12px; gap: 6px; flex-direction: column; }
+    .new-project-input-wrap.show { display: flex; }
+    .new-project-input {
+      padding: 8px 10px;
+      border: 1.5px solid #1a56db;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      outline: none;
+    }
+    .new-project-actions { display: flex; gap: 6px; }
+    .btn-confirm { flex: 1; padding: 8px; background: #1a56db; color: #fff; border: none; border-radius: 4px; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-confirm:hover { background: #0e3a9e; }
+    .btn-cancel  { flex: 1; padding: 8px; background: #e0e0e0; color: #1a1a1a; border: none; border-radius: 4px; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-cancel:hover  { background: #c8c8c8; }
+
+    /* ── ITEMS PANEL ── */
+    .items-panel {
+      background: #fff;
+      border-radius: 12px;
+      border: 1.5px solid #e8e8e8;
+      padding: 28px 24px;
+      min-height: 400px;
+    }
+
+    /* empty state */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 300px;
+      gap: 16px;
+      color: #888;
+    }
+    .empty-state .empty-icon { font-size: 64px; }
+    .empty-state p { font-size: 1.1rem; font-weight: 500; text-align: center; }
+
+    /* project heading */
+    .project-heading { font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; color: #1a1a1a; }
+
+    /* add item form */
+    .add-item-form {
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    .add-item-form h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+    .form-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .form-row input[type="text"] {
+      flex: 2; min-width: 120px;
+      padding: 9px 12px;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-row input[type="text"]:focus { border-color: #1a56db; }
+    .form-row input[type="number"] {
+      width: 80px;
+      padding: 9px 8px;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-row input[type="number"]:focus { border-color: #1a56db; }
+    .form-row select {
+      padding: 9px 8px;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      background: #fff;
+      outline: none;
+      cursor: pointer;
+    }
+    .form-row select:focus { border-color: #1a56db; }
+    .form-row .notes-input {
+      flex: 1.5; min-width: 100px;
+    }
+    .btn-add {
+      padding: 9px 20px;
+      background: #1a56db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+    .btn-add:hover { background: #a51818; }
+
+    /* progress */
+    .progress-wrap { margin-bottom: 20px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 13px; color: #555; margin-bottom: 6px; }
+    .progress-bar-bg { background: #e0e0e0; border-radius: 99px; height: 8px; overflow: hidden; }
+    .progress-bar-fill { background: #1a56db; height: 100%; border-radius: 99px; transition: width .4s; }
+
+    /* items list */
+    .items-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .item-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border: 1.5px solid #ececec;
+      transition: border-color .15s;
+    }
+    .item-row:hover { border-color: #b0c4f0; }
+    .item-row.checked { opacity: .6; }
+    .item-checkbox { width: 18px; height: 18px; cursor: pointer; accent-color: #1a56db; flex-shrink: 0; }
+    .item-name { flex: 2; font-size: 14px; font-weight: 500; }
+    .item-row.checked .item-name { text-decoration: line-through; color: #888; }
+    .item-qty { font-size: 13px; color: #555; white-space: nowrap; }
+    .item-notes { flex: 1.5; font-size: 12px; color: #888; font-style: italic; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .item-delete {
+      background: none; border: none; color: #ccc; font-size: 18px; cursor: pointer; padding: 0 4px; line-height: 1; transition: color .15s;
+    }
+    .item-delete:hover { color: #a51818; }
+
+    .no-items { text-align: center; color: #aaa; font-size: 14px; padding: 32px 0; }
+
+    /* whatsapp send */
+    .whatsapp-send-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 28px;
+      background: #25d366;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+      text-decoration: none;
+    }
+    .whatsapp-send-btn:hover { background: #1aad54; }
+
+    /* ── TIP SECTION ── */
+    .tip-section {
+      background: #f5f5f5;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .tip-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px 28px;
+      max-width: 600px;
+      font-size: 15px;
+    }
+    .tip-card .tip-icon { font-size: 28px; flex-shrink: 0; }
+    .tip-card a { color: #1a56db; font-weight: 700; text-decoration: none; }
+    .tip-card a:hover { text-decoration: underline; }
+
+    /* ── WHATSAPP FAB ── */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      width: 58px; height: 58px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,.22);
+      z-index: 200;
+      transition: background .2s, transform .2s;
+      text-decoration: none;
+    }
+    .whatsapp-fab:hover { background: #1aad54; transform: scale(1.08); }
+    .whatsapp-fab svg { width: 30px; height: 30px; fill: #fff; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.8rem; }
+      .form-row { flex-direction: column; }
+      .form-row input[type="text"],
+      .form-row input[type="number"],
+      .form-row select,
+      .btn-add { width: 100%; }
+      .tip-card { flex-direction: column; text-align: center; }
+      .item-notes { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html"><img src="logo.png" alt="בית הבנאים" /></a>
+  <button class="nav-hamburger" id="hamburger" aria-label="תפריט">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#about">אודות</a></li>
+    <li><a href="calculator.html">מחשבון</a></li>
+    <li><a href="videos.html">הדרכות</a></li>
+    <li><a href="top-products.html">דירוג מוצרים</a></li>
+    <li><a href="my-project.html" class="active">פרויקט שלי</a></li>
+    <li><a href="articles.html">מאמרים</a></li>
+    <li><a href="index.html#contact">יצירת קשר</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>פרויקט שלי</h1>
+  <p>נהל את רשימת הקניות לפרויקטי הבנייה שלך</p>
+</section>
+
+<!-- APP -->
+<div class="app-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>הפרויקטים שלי</h2>
+    <ul class="project-list" id="projectList"></ul>
+
+    <button class="new-project-btn" id="newProjectBtn">+ פרויקט חדש</button>
+
+    <div class="new-project-input-wrap" id="newProjectWrap">
+      <input class="new-project-input" id="newProjectInput" type="text" placeholder="שם הפרויקט..." maxlength="60" />
+      <div class="new-project-actions">
+        <button class="btn-confirm" id="newProjectConfirm">✓ צור</button>
+        <button class="btn-cancel"  id="newProjectCancel">ביטול</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ITEMS PANEL -->
+  <main class="items-panel" id="itemsPanel">
+    <div class="empty-state" id="emptyState">
+      <span class="empty-icon">🏗️</span>
+      <p>בחר פרויקט או צור חדש כדי להתחיל</p>
+    </div>
+
+    <div id="projectView" style="display:none;">
+      <h2 class="project-heading" id="projectHeading"></h2>
+
+      <!-- ADD FORM -->
+      <div class="add-item-form">
+        <h3>הוסף פריט לרשימה</h3>
+        <div class="form-row">
+          <input type="text"   id="itemName"  placeholder="שם הפריט (למשל: צמנט לבן)" maxlength="80" />
+          <input type="number" id="itemQty"   placeholder="כמות" min="0" step="any" />
+          <select id="itemUnit">
+            <option value="יחידה">יחידה</option>
+            <option value='מ"ר'>מ"ר</option>
+            <option value="מטר">מטר</option>
+            <option value='ק"ג'>ק"ג</option>
+            <option value="שק">שק</option>
+            <option value="קרטון">קרטון</option>
+            <option value="ליטר">ליטר</option>
+            <option value="טון">טון</option>
+          </select>
+          <input type="text" id="itemNotes" class="notes-input" placeholder="הערות (אופציונלי)" maxlength="120" />
+          <button class="btn-add" id="addItemBtn">הוסף</button>
+        </div>
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-label">
+          <span id="progressText">0 מתוך 0 פריטים הושלמו</span>
+          <span id="progressPct">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- LIST -->
+      <ul class="items-list" id="itemsList"></ul>
+      <p class="no-items" id="noItemsMsg" style="display:none;">עדיין אין פריטים. הוסף את הפריט הראשון ✨</p>
+
+      <!-- WHATSAPP SEND -->
+      <button class="whatsapp-send-btn" id="sendWhatsapp">
+        <svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:#fff;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        שלח לוואטסאפ
+      </button>
+    </div>
+  </main>
+</div>
+
+<!-- TIP SECTION -->
+<section class="tip-section">
+  <div class="tip-card">
+    <span class="tip-icon">💡</span>
+    <span>טיפ: השתמש <a href="calculator.html">במחשבון הכמויות שלנו</a> כדי לדעת כמה לקנות לפני שמוסיפים לרשימה</span>
+  </div>
+</section>
+
+<!-- WHATSAPP FAB -->
+<a class="whatsapp-fab" href="https://wa.me/972523792776" target="_blank" rel="noopener" aria-label="וואטסאפ">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  // ── STATE ──
+  const STORAGE_KEY = 'beit-habanaim-projects';
+  let state = { projects: [], activeId: null };
+
+  function loadState() {
+    try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { projects: [], activeId: null }; }
+    catch(e) { state = { projects: [], activeId: null }; }
+  }
+  function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+  function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+  function activeProject() { return state.projects.find(p => p.id === state.activeId) || null; }
+
+  // ── RENDER SIDEBAR ──
+  function renderSidebar() {
+    const list = document.getElementById('projectList');
+    list.innerHTML = '';
+    state.projects.forEach(proj => {
+      const li = document.createElement('li');
+      li.className = 'project-item' + (proj.id === state.activeId ? ' active' : '');
+      li.innerHTML = `
+        <span class="project-item-name"><span>🏗️</span><span>${escHtml(proj.name)}</span></span>
+        <button class="project-delete" data-id="${proj.id}" title="מחק פרויקט">×</button>
+      `;
+      li.addEventListener('click', e => {
+        if (e.target.classList.contains('project-delete')) return;
+        state.activeId = proj.id;
+        saveState();
+        render();
+      });
+      li.querySelector('.project-delete').addEventListener('click', e => {
+        e.stopPropagation();
+        if (confirm(`למחוק את הפרויקט "${proj.name}"?`)) {
+          state.projects = state.projects.filter(p => p.id !== proj.id);
+          if (state.activeId === proj.id) state.activeId = state.projects[0]?.id || null;
+          saveState();
+          render();
+        }
+      });
+      list.appendChild(li);
+    });
+  }
+
+  // ── RENDER ITEMS PANEL ──
+  function renderPanel() {
+    const proj = activeProject();
+    document.getElementById('emptyState').style.display   = proj ? 'none' : 'flex';
+    document.getElementById('projectView').style.display  = proj ? 'block' : 'none';
+    if (!proj) return;
+
+    document.getElementById('projectHeading').textContent = proj.name;
+
+    const items = proj.items || [];
+    const checked = items.filter(i => i.checked).length;
+    const total   = items.length;
+    const pct     = total ? Math.round((checked / total) * 100) : 0;
+
+    document.getElementById('progressText').textContent = `${checked} מתוך ${total} פריטים הושלמו`;
+    document.getElementById('progressPct').textContent  = `${pct}%`;
+    document.getElementById('progressFill').style.width = `${pct}%`;
+    document.getElementById('progressWrap').style.display = total ? 'block' : 'none';
+
+    const ul = document.getElementById('itemsList');
+    ul.innerHTML = '';
+    document.getElementById('noItemsMsg').style.display = total ? 'none' : 'block';
+
+    items.forEach((item, idx) => {
+      const li = document.createElement('li');
+      li.className = 'item-row' + (item.checked ? ' checked' : '');
+      li.innerHTML = `
+        <input type="checkbox" class="item-checkbox" ${item.checked ? 'checked' : ''} data-idx="${idx}" />
+        <span class="item-name">${escHtml(item.name)}</span>
+        <span class="item-qty">${escHtml(String(item.qty))} ${escHtml(item.unit)}</span>
+        <span class="item-notes">${escHtml(item.notes || '')}</span>
+        <button class="item-delete" data-idx="${idx}" title="מחק פריט">×</button>
+      `;
+      li.querySelector('.item-checkbox').addEventListener('change', e => {
+        proj.items[idx].checked = e.target.checked;
+        saveState();
+        render();
+      });
+      li.querySelector('.item-delete').addEventListener('click', () => {
+        proj.items.splice(idx, 1);
+        saveState();
+        render();
+      });
+      ul.appendChild(li);
+    });
+  }
+
+  function render() { renderSidebar(); renderPanel(); }
+
+  // ── ESCAPE HTML ──
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── NEW PROJECT ──
+  document.getElementById('newProjectBtn').addEventListener('click', () => {
+    const wrap = document.getElementById('newProjectWrap');
+    wrap.classList.add('show');
+    document.getElementById('newProjectInput').focus();
+  });
+  document.getElementById('newProjectCancel').addEventListener('click', () => {
+    document.getElementById('newProjectWrap').classList.remove('show');
+    document.getElementById('newProjectInput').value = '';
+  });
+  function confirmNewProject() {
+    const name = document.getElementById('newProjectInput').value.trim();
+    if (!name) { document.getElementById('newProjectInput').focus(); return; }
+    const proj = { id: genId(), name, items: [] };
+    state.projects.push(proj);
+    state.activeId = proj.id;
+    saveState();
+    document.getElementById('newProjectWrap').classList.remove('show');
+    document.getElementById('newProjectInput').value = '';
+    render();
+  }
+  document.getElementById('newProjectConfirm').addEventListener('click', confirmNewProject);
+  document.getElementById('newProjectInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') confirmNewProject();
+    if (e.key === 'Escape') document.getElementById('newProjectCancel').click();
+  });
+
+  // ── ADD ITEM ──
+  document.getElementById('addItemBtn').addEventListener('click', addItem);
+  document.getElementById('itemName').addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
+
+  function addItem() {
+    const proj = activeProject();
+    if (!proj) return;
+    const name  = document.getElementById('itemName').value.trim();
+    const qty   = document.getElementById('itemQty').value.trim() || '1';
+    const unit  = document.getElementById('itemUnit').value;
+    const notes = document.getElementById('itemNotes').value.trim();
+    if (!name) { document.getElementById('itemName').focus(); return; }
+    proj.items.push({ id: genId(), name, qty, unit, notes, checked: false });
+    saveState();
+    document.getElementById('itemName').value  = '';
+    document.getElementById('itemQty').value   = '';
+    document.getElementById('itemNotes').value = '';
+    document.getElementById('itemName').focus();
+    render();
+  }
+
+  // ── WHATSAPP SEND ──
+  document.getElementById('sendWhatsapp').addEventListener('click', () => {
+    const proj = activeProject();
+    if (!proj) return;
+    const items = proj.items || [];
+    if (!items.length) { alert('אין פריטים ברשימה'); return; }
+
+    let msg = `שלום! רשימת הקניות שלי לפרויקט "${proj.name}":\n\n`;
+    items.forEach((item, i) => {
+      const status = item.checked ? '✅' : '⬜';
+      msg += `${status} ${i+1}. ${item.name} — ${item.qty} ${item.unit}`;
+      if (item.notes) msg += ` (${item.notes})`;
+      msg += '\n';
+    });
+    msg += '\nתודה, בית הבנאים 🏗️';
+
+    const phone = '972523792776';
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+  });
+
+  // ── NAV HAMBURGER ──
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // ── INIT ──
+  loadState();
+  render();
+</script>
+</body>
+</html>

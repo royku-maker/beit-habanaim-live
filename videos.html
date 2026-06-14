@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ספריית הדרכות וידאו | בית הבנאים</title>
+<meta name="description" content="סרטוני הדרכה מקצועיים לעבודות בניה ושיפוץ — ריצוף, צביעה, גבס, אינסטלציה, חשמל ועוד. בית הבנאים."/>
+<link rel="canonical" href="https://beithabanaim.co.il/videos.html"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Heebo', sans-serif;
+  color: #1a1a1a;
+  background: #ffffff;
+  direction: rtl;
+}
+
+/* ── NAV ── */
+nav {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+.nav-logo img { height: 48px; display: block; }
+.nav-links {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background .2s, color .2s;
+}
+.nav-links a:hover,
+.nav-links a.active { background: #1a56db; color: #fff; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #1a56db 0%, #1240a8 100%);
+  color: #fff;
+  text-align: center;
+  padding: 72px 24px 60px;
+}
+.hero h1 { font-size: 42px; font-weight: 800; margin-bottom: 14px; }
+.hero p  { font-size: 20px; font-weight: 300; opacity: .9; max-width: 640px; margin: 0 auto; }
+
+/* ── FILTER BAR ── */
+.filter-section {
+  background: #f5f5f5;
+  padding: 28px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.filter-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.filter-btn {
+  background: #fff;
+  color: #1a1a1a;
+  border: 2px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 8px 20px;
+  font-family: 'Heebo', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.filter-btn:hover { background: #1a56db; color: #fff; border-color: #1a56db; }
+.filter-btn.active { background: #1a56db; color: #fff; border-color: #1a56db; }
+
+/* ── VIDEOS GRID ── */
+.videos-section {
+  padding: 50px 24px 80px;
+  background: #ffffff;
+}
+.videos-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* ── VIDEO CARD ── */
+.video-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  transition: transform .3s, box-shadow .3s;
+  display: flex;
+  flex-direction: column;
+}
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0,0,0,.13);
+}
+.video-card[data-hidden="true"] { display: none; }
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  background: #000;
+}
+.video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+.video-body {
+  padding: 18px 20px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.video-badge {
+  display: inline-block;
+  background: rgba(26,86,219,.1);
+  color: #1a56db;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  width: fit-content;
+}
+.video-body h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+.video-body p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* ── SUBMIT SECTION ── */
+.submit-section {
+  background: #f5f5f5;
+  padding: 60px 24px;
+}
+.submit-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.08);
+  padding: 44px 40px;
+  text-align: center;
+}
+.submit-card h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+.submit-card p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+.wa-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Heebo', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 4px;
+  transition: background .2s, transform .2s;
+}
+.wa-submit-btn:hover { background: #1eba57; transform: scale(1.03); }
+.wa-submit-btn svg { width: 24px; height: 24px; fill: #fff; flex-shrink: 0; }
+
+/* ── WHATSAPP FLOAT ── */
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 999;
+}
+.whatsapp-float a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  background: #25d366;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  transition: transform .2s, box-shadow .2s;
+}
+.whatsapp-float a:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,.3); }
+.whatsapp-float svg { width: 30px; height: 30px; fill: #fff; }
+
+/* ── FOOTER ── */
+footer {
+  background: #1a1a1a;
+  color: #999;
+  text-align: center;
+  padding: 24px;
+  font-size: 14px;
+}
+footer a { color: #c8a04e; text-decoration: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .videos-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .hero h1 { font-size: 28px; }
+  .hero p  { font-size: 16px; }
+  .videos-grid { grid-template-columns: 1fr; }
+  .nav-links a { font-size: 12px; padding: 5px 7px; }
+  .submit-card { padding: 30px 20px; }
+  .videos-section { padding: 36px 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img src="logo.png" alt="בית הבנאים לוגו"/>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">אודות</a></li>
+      <li><a href="calculator.html">מחשבון</a></li>
+      <li><a href="videos.html" class="active">הדרכות</a></li>
+      <li><a href="top-products.html">דירוג מוצרים</a></li>
+      <li><a href="my-project.html">פרויקט שלי</a></li>
+      <li><a href="articles.html">מאמרים</a></li>
+      <li><a href="index.html#contact">יצירת קשר</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>ספריית הדרכות וידאו</h1>
+  <p>למד מהמומחים — סרטוני הדרכה מקצועיים לעבודות בניה ושיפוץ</p>
+</section>
+
+<!-- FILTER BAR -->
+<section class="filter-section">
+  <div class="filter-inner">
+    <button class="filter-btn active" data-filter="all">כל הסרטונים</button>
+    <button class="filter-btn" data-filter="ריצוף">ריצוף</button>
+    <button class="filter-btn" data-filter="צביעה">צביעה</button>
+    <button class="filter-btn" data-filter="גבס וטיח">גבס וטיח</button>
+    <button class="filter-btn" data-filter="אינסטלציה">אינסטלציה</button>
+    <button class="filter-btn" data-filter="חשמל">חשמל</button>
+    <button class="filter-btn" data-filter="בנייה כללית">בנייה כללית</button>
+  </div>
+</section>
+
+<!-- VIDEOS GRID -->
+<section class="videos-section">
+  <div class="videos-inner">
+    <div class="videos-grid" id="videosGrid">
+
+      <!-- ריצוף #1 -->
+      <div class="video-card" data-category="ריצוף">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="איך מניחים אריחים בחדר האמבטיה — מדריך מלא"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-body">
+          <span class="video-badge">ריצוף</span>
+          <h3>איך מניחים אריחים בחדר האמבטיה — מדריך מלא</h3>
+          <p>שלב אחר שלב להנחת אריחים מקצועיים</p>
+        </div>
+      </div>
+
+      <!-- ריצוף #2 -->
+      <div class="video-card" data-category="ריצוף">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="הכנת משטח לפני ריצוף — הטעויות שכולם עושים"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-body">
+          <span class="video-badge">ריצוף</span>
+          <h3>הכנת משטח לפני ריצוף — הטעויות שכולם עושים</h3>
+          <p>הכנה נכונה היא המפתח לתוצאה מושלמת</p>
+        </div>
+      </div>
+
+      <!-- צביעה #1 -->
+      <div class="video-card" data-category="צביעה">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="צביעת קירות פנים — המדריך המלא"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-body">
+          <span class="video-badge">צביעה</span>
+          <h3>צביעת קירות פנים — המדריך המלא</h3>
+          <p>איך לצבוע קיר כמו מקצוען</p>
+        </div>
+      </div>
+
+      <!-- צביעה #2 -->
+      <div class="video-card" data-category="צביעה">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="בחירת צבע נכון לכל חדר"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-body">
+          <span class="video-badge">צביעה</span>
+          <h3>בחירת צבע נכון לכל חדר</h3>
+          <p>טיפים לבחירת גוון וסוג צבע</p>
+        </div>
+      </div>
+
+      <!-- גבס וטיח #1 -->
+      <div class="video-card" data-category="גבס וטיח">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="הגשה וטיוח קיר — טכניקות מקצועיות"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-body">
+          <span class="video-badge">גבס וטיח</span>
+          <h3>הגשה וטיוח קיר — טכניקות מקצועיות</h3>
+          <p>איך מביאים קיר לגימור חלק ומושלם</p>
+        </div>
+      </div>
+
+      <!-- גבס וטיח #2 -->
+      <div class="video-card" data-category="גבס וטיח">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="התקנת תקרת גבס — שלב אחר שלב"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-body">
+          <span class="video-badge">גבס וטיח</span>
+          <h3>התקנת תקרת גבס — שלב אחר שלב</h3>
+          <p>מדריך מלא להתקנת תקרת גבס ביתית</p>
+        </div>
+      </div>
+
+      <!-- אינסטלציה #1 -->
+      <div class="video-card" data-category="אינסטלציה">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="החלפת ברז מטבח — עשה זאת בעצמך"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-body">
+          <span class="video-badge">אינסטלציה</span>
+          <h3>החלפת ברז מטבח — עשה זאת בעצמך</h3>
+          <p>מדריך פשוט להחלפת ברז ללא אינסטלטור</p>
+        </div>
+      </div>
+
+      <!-- חשמל #1 -->
+      <div class="video-card" data-category="חשמל">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="התקנת שקע חשמל — כל מה שצריך לדעת"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-body">
+          <span class="video-badge">חשמל</span>
+          <h3>התקנת שקע חשמל — כל מה שצריך לדעת</h3>
+          <p>בטיחות וטכניקה להתקנת שקעים</p>
+        </div>
+      </div>
+
+      <!-- בנייה כללית #1 -->
+      <div class="video-card" data-category="בנייה כללית">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="יציקת רצפת בטון — מדריך מקצועי"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-body">
+          <span class="video-badge">בנייה כללית</span>
+          <h3>יציקת רצפת בטון — מדריך מקצועי</h3>
+          <p>תכנון ויציקה נכונה של רצפת בטון</p>
+        </div>
+      </div>
+
+    </div><!-- /videos-grid -->
+  </div>
+</section>
+
+<!-- SUBMIT SECTION -->
+<section class="submit-section">
+  <div class="submit-card">
+    <h2>יש לך סרטון הדרכה?</h2>
+    <p>יש לך סרטון הדרכה שתרצה לשתף עם הקהילה? נשמח לשמוע ממך ולהוסיף את הסרטון לספרייה שלנו.</p>
+    <a class="wa-submit-btn" href="https://wa.me/972523792776?text=שלום%2C%20אני%20רוצה%20לשתף%20סרטון%20הדרכה" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      שלח לנו בוואטסאפ
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <a href="index.html">בית הבנאים</a> — כל הזכויות שמורות</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<div class="whatsapp-float">
+  <a href="https://wa.me/972523792776" target="_blank" rel="noopener" aria-label="צור קשר בוואטסאפ">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+
+<script>
+// NOTE: The YouTube video IDs below (dQw4w9WgXcQ) are placeholders.
+// Replace each iframe src with the real YouTube video ID before going live.
+// Example: https://www.youtube.com/embed/REAL_VIDEO_ID
+
+(function () {
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.video-card');
+
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      // Update active button
+      btns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      var filter = btn.getAttribute('data-filter');
+
+      cards.forEach(function (card) {
+        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+          card.removeAttribute('data-hidden');
+        } else {
+          card.setAttribute('data-hidden', 'true');
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

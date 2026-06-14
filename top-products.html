@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מוצרים מובילים | בית הבנאים</title>
+  <meta name="description" content="המוצרים הכי מומלצים על ידי הקבלנים שלנו — ריצוף, צביעה, איטום, כלי עבודה ועוד" />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      direction: rtl;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo img { height: 48px; display: block; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-link {
+      text-decoration: none;
+      color: #1a1a1a;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: color .2s, background .2s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: #1a56db; background: #f0f4ff; }
+    .nav-link.active { color: #1a56db; font-weight: 700; }
+
+    /* hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #1a1a1a; border-radius: 2px; transition: .3s; }
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #fff;
+      border-top: 1px solid #eee;
+      padding: 12px 24px 16px;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu .nav-link { font-size: 16px; padding: 10px 4px; border-bottom: 1px solid #f0f0f0; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1a56db 0%, #1241a8 100%);
+      color: #fff;
+      text-align: center;
+      padding: 72px 24px 60px;
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin-bottom: 14px; }
+    .hero p { font-size: clamp(1rem, 2.5vw, 1.25rem); font-weight: 400; opacity: .9; }
+
+    /* ── CONTROLS ── */
+    .controls-bar {
+      background: #f5f5f5;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 20px 24px;
+    }
+    .controls-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .filter-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter-btn {
+      padding: 8px 18px;
+      border: 2px solid #1a56db;
+      border-radius: 4px;
+      background: transparent;
+      color: #1a56db;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: #1a56db;
+      color: #fff;
+    }
+
+    .sort-wrap { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+    .sort-wrap label { font-size: 14px; font-weight: 600; color: #555; }
+    .sort-select {
+      padding: 8px 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      background: #fff;
+      color: #1a1a1a;
+      cursor: pointer;
+      outline: none;
+      direction: rtl;
+    }
+    .sort-select:focus { border-color: #1a56db; }
+
+    /* ── GRID ── */
+    .products-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    /* ── CARD ── */
+    .product-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+    }
+
+    .card-img-wrap {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .badge-top {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #1a56db;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: .3px;
+    }
+    .badge-recommended {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #f59e0b;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .card-body {
+      padding: 18px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 8px;
+    }
+    .card-name { font-size: 16px; font-weight: 700; color: #1a1a1a; line-height: 1.3; }
+    .card-brand { font-size: 13px; color: #888; font-weight: 400; }
+    .card-rating { display: flex; align-items: center; gap: 6px; }
+    .stars { color: #f59e0b; font-size: 16px; letter-spacing: 1px; }
+    .rating-num { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+    .reviews-count { font-size: 12px; color: #999; }
+    .card-desc { font-size: 14px; color: #444; line-height: 1.5; flex: 1; }
+
+    .card-btn {
+      display: block;
+      margin-top: 4px;
+      padding: 10px 16px;
+      border: 2px solid #1a56db;
+      border-radius: 4px;
+      background: transparent;
+      color: #1a56db;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .card-btn:hover {
+      background: #a51818;
+      border-color: #a51818;
+      color: #fff;
+    }
+
+    /* ── SUGGEST SECTION ── */
+    .suggest-section {
+      background: #f5f5f5;
+      padding: 60px 24px;
+    }
+    .suggest-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .suggest-inner h2 { font-size: 1.6rem; font-weight: 800; color: #1a1a1a; margin-bottom: 12px; }
+    .suggest-inner p { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 28px; }
+    .wa-suggest-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25d366;
+      color: #fff;
+      font-family: 'Heebo', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .wa-suggest-btn:hover { background: #1ebe5d; }
+    .wa-suggest-btn svg { flex-shrink: 0; }
+
+    /* ── FLOATING WA ── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 999;
+      background: #25d366;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.45);
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-float:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,.6); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1a1a1a;
+      color: #aaa;
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+    }
+    footer a { color: #aaa; text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    /* ── NO RESULTS ── */
+    .no-results {
+      display: none;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 24px;
+      color: #888;
+      font-size: 16px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .controls-inner { flex-direction: column; align-items: flex-start; }
+      .sort-wrap { width: 100%; justify-content: space-between; }
+      .sort-select { flex: 1; }
+      .suggest-inner { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="בית הבנאים" />
+    </a>
+    <nav class="nav-links" aria-label="תפריט ראשי">
+      <a href="index.html#about" class="nav-link">אודות</a>
+      <a href="calculator.html" class="nav-link">מחשבון</a>
+      <a href="videos.html" class="nav-link">הדרכות</a>
+      <a href="top-products.html" class="nav-link active">דירוג מוצרים</a>
+      <a href="my-project.html" class="nav-link">פרויקט שלי</a>
+      <a href="articles.html" class="nav-link">מאמרים</a>
+      <a href="index.html#contact" class="nav-link">יצירת קשר</a>
+    </nav>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="תפריט">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about" class="nav-link">אודות</a>
+    <a href="calculator.html" class="nav-link">מחשבון</a>
+    <a href="videos.html" class="nav-link">הדרכות</a>
+    <a href="top-products.html" class="nav-link active">דירוג מוצרים</a>
+    <a href="my-project.html" class="nav-link">פרויקט שלי</a>
+    <a href="articles.html" class="nav-link">מאמרים</a>
+    <a href="index.html#contact" class="nav-link">יצירת קשר</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>מוצרים מובילים</h1>
+  <p>המוצרים הכי מומלצים על ידי הקבלנים שלנו</p>
+</section>
+
+<!-- CONTROLS -->
+<div class="controls-bar">
+  <div class="controls-inner">
+    <div class="filter-buttons" role="group" aria-label="סינון לפי קטגוריה">
+      <button class="filter-btn active" data-cat="כולם">כולם</button>
+      <button class="filter-btn" data-cat="ריצוף">ריצוף</button>
+      <button class="filter-btn" data-cat="צביעה">צביעה</button>
+      <button class="filter-btn" data-cat="איטום">איטום</button>
+      <button class="filter-btn" data-cat="כלי עבודה">כלי עבודה</button>
+      <button class="filter-btn" data-cat="חיבורים">חיבורים</button>
+      <button class="filter-btn" data-cat="גבס">גבס</button>
+    </div>
+    <div class="sort-wrap">
+      <label for="sortSelect">מיין לפי:</label>
+      <select id="sortSelect" class="sort-select" onchange="sortProducts()">
+        <option value="recommended">הכי מומלץ</option>
+        <option value="rating">דירוג גבוה</option>
+        <option value="reviews">מספר ביקורות</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS GRID -->
+<section class="products-section" aria-label="מוצרים מובילים">
+  <div class="products-grid" id="productsGrid">
+    <!-- cards rendered by JS -->
+    <div class="no-results" id="noResults">לא נמצאו מוצרים בקטגוריה זו.</div>
+  </div>
+</section>
+
+<!-- SUGGEST SECTION -->
+<section class="suggest-section">
+  <div class="suggest-inner">
+    <h2>יש לך מוצר מומלץ?</h2>
+    <p>קבלנים ובעלי מקצוע — שתפו אותנו במוצרים שאתם ממליצים ונוסיף אותם לרשימה שלנו</p>
+    <a href="https://wa.me/972523792776?text=%D7%A9%D7%9C%D7%95%D7%9D%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%94%D7%9E%D7%9C%D7%99%D7%A5%20%D7%A2%D7%9C%20%D7%9E%D7%95%D7%A6%D7%A8%20%D7%9C%D7%A8%D7%A9%D7%99%D7%9E%D7%AA%20%D7%94%D7%9E%D7%95%D7%91%D7%99%D7%9C%D7%99%D7%9D%3A"
+       class="wa-suggest-btn" target="_blank" rel="noopener">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      שתפו אותנו בוואטסאפ
+    </a>
+  </div>
+</section>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/972523792776?text=%D7%A9%D7%9C%D7%95%D7%9D%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A0%D7%95%D7%A1%D7%A3"
+   class="wa-float" target="_blank" rel="noopener" aria-label="צור קשר בוואטסאפ">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 בית הבנאים | <a href="index.html">דף הבית</a> | <a href="index.html#contact">יצירת קשר</a></p>
+</footer>
+
+<script>
+  const products = [
+    {
+      id: 1,
+      name: "ניר-לט פריימר אחיד",
+      brand: "ניר-לט",
+      category: "ריצוף",
+      rating: 4.8,
+      reviews: 63,
+      desc: "פריימר איכותי לכל סוגי המשטחים לפני ריצוף",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80",
+      recommended: true,
+      order: 1
+    },
+    {
+      id: 2,
+      name: "דבק אריחים פלקסיבל",
+      brand: "סיקה",
+      category: "ריצוף",
+      rating: 4.7,
+      reviews: 51,
+      desc: "דבק גמיש מעולה לאריחים גדולים ופורצלן",
+      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80",
+      recommended: false,
+      order: 2
+    },
+    {
+      id: 3,
+      name: "צבע חיצוני פרמיום",
+      brand: "דולפין",
+      category: "צביעה",
+      rating: 4.9,
+      reviews: 89,
+      desc: "עמיד בתנאי חוץ קשים, כיסוי מעולה",
+      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&q=80",
+      recommended: true,
+      order: 3
+    },
+    {
+      id: 4,
+      name: "פריימר אנטי עובש",
+      brand: "נירלט",
+      category: "צביעה",
+      rating: 4.6,
+      reviews: 34,
+      desc: "מניעת עובש לשנים רבות, מתאים למקלחות",
+      image: "https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=400&q=80",
+      recommended: false,
+      order: 4
+    },
+    {
+      id: 5,
+      name: "ממברנה איטום גמישה",
+      brand: "סיקה",
+      category: "איטום",
+      rating: 4.8,
+      reviews: 72,
+      desc: "איטום מקיר לקיר, גמיש ועמיד לאורך שנים",
+      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80",
+      recommended: true,
+      order: 5
+    },
+    {
+      id: 6,
+      name: "פוגה אפוקסי",
+      brand: "יעקובי",
+      category: "ריצוף",
+      rating: 4.5,
+      reviews: 28,
+      desc: "פוגה עמידה בלחות, אינה מצהיבה",
+      image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&q=80",
+      recommended: false,
+      order: 6
+    },
+    {
+      id: 7,
+      name: "מקדחה מקצועית 18V",
+      brand: "מקיטה",
+      category: "כלי עבודה",
+      rating: 4.9,
+      reviews: 112,
+      desc: "חזקה, קלה, סוללה ארוכה במיוחד",
+      image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&q=80",
+      recommended: true,
+      order: 7
+    },
+    {
+      id: 8,
+      name: 'גילאי גבס 12.5 מ"מ',
+      brand: "חברת גבס",
+      category: "גבס",
+      rating: 4.7,
+      reviews: 44,
+      desc: "גבס עמיד ואחיד, מתאים לתקרות וקירות",
+      image: "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=400&q=80",
+      recommended: false,
+      order: 8
+    },
+    {
+      id: 9,
+      name: "ברגים ודיבלים מקצועיים",
+      brand: "פישר",
+      category: "חיבורים",
+      rating: 4.6,
+      reviews: 67,
+      desc: "אחיזה מעולה בכל סוגי הקיר",
+      image: "https://images.unsplash.com/photo-1609205807107-2d5d00f17463?w=400&q=80",
+      recommended: false,
+      order: 9
+    },
+    {
+      id: 10,
+      name: "טיח פנים מוכן",
+      brand: "טיכל",
+      category: "גבס",
+      rating: 4.5,
+      reviews: 39,
+      desc: "טיח מוכן מיידית, אחיד ונוח לעבודה",
+      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80",
+      recommended: false,
+      order: 10
+    },
+    {
+      id: 11,
+      name: "מברגה מקצועית",
+      brand: "בוש",
+      category: "כלי עבודה",
+      rating: 4.8,
+      reviews: 95,
+      desc: "דיוק גבוה, מנוע חזק לעבודות כבדות",
+      image: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&q=80",
+      recommended: false,
+      order: 11
+    },
+    {
+      id: 12,
+      name: "איטום גג נוזלי",
+      brand: "נירלט",
+      category: "איטום",
+      rating: 4.7,
+      reviews: 56,
+      desc: "יישום קל, עמיד לאורך שנים בתנאי ישראל",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80",
+      recommended: false,
+      order: 12
+    }
+  ];
+
+  function starsHTML(rating) {
+    const full = Math.floor(rating);
+    const half = rating - full >= 0.5;
+    let s = '';
+    for (let i = 0; i < full; i++) s += '★';
+    if (half) s += '½';
+    for (let i = full + (half ? 1 : 0); i < 5; i++) s += '☆';
+    return s;
+  }
+
+  function waLink(product) {
+    const msg = encodeURIComponent(`שלום, אשמח לקבל מידע נוסף על המוצר: ${product.name} של ${product.brand}`);
+    return `https://wa.me/972523792776?text=${msg}`;
+  }
+
+  function renderCard(p) {
+    return `
+      <div class="product-card" data-cat="${p.category}" data-rating="${p.rating}" data-reviews="${p.reviews}" data-recommended="${p.recommended}" data-order="${p.order}">
+        <div class="card-img-wrap">
+          <img src="${p.image}" alt="${p.name}" loading="lazy" />
+          <span class="badge-top">${p.category}</span>
+          ${p.recommended ? '<span class="badge-recommended">מומלץ ביותר</span>' : ''}
+        </div>
+        <div class="card-body">
+          <div class="card-name">${p.name}</div>
+          <div class="card-brand">${p.brand}</div>
+          <div class="card-rating">
+            <span class="stars">${starsHTML(p.rating)}</span>
+            <span class="rating-num">${p.rating}</span>
+            <span class="reviews-count">${p.reviews} ביקורות</span>
+          </div>
+          <div class="card-desc">${p.desc}</div>
+          <a href="${waLink(p)}" class="card-btn" target="_blank" rel="noopener">למידע נוסף</a>
+        </div>
+      </div>`;
+  }
+
+  let currentCat = 'כולם';
+  let currentSort = 'recommended';
+
+  function getSorted(list) {
+    const sorted = [...list];
+    if (currentSort === 'rating') {
+      sorted.sort((a, b) => b.rating - a.rating);
+    } else if (currentSort === 'reviews') {
+      sorted.sort((a, b) => b.reviews - a.reviews);
+    } else {
+      // recommended: recommended first, then by original order
+      sorted.sort((a, b) => {
+        if (b.recommended !== a.recommended) return b.recommended - a.recommended;
+        return a.order - b.order;
+      });
+    }
+    return sorted;
+  }
+
+  function render() {
+    const grid = document.getElementById('productsGrid');
+    const noResults = document.getElementById('noResults');
+    const filtered = currentCat === 'כולם' ? products : products.filter(p => p.category === currentCat);
+    const sorted = getSorted(filtered);
+
+    // Remove old cards
+    Array.from(grid.querySelectorAll('.product-card')).forEach(c => c.remove());
+
+    if (sorted.length === 0) {
+      noResults.style.display = 'block';
+    } else {
+      noResults.style.display = 'none';
+      sorted.forEach(p => {
+        grid.insertAdjacentHTML('afterbegin', renderCard(p));
+      });
+      // Re-order so grid starts from first inserted
+      const cards = Array.from(grid.querySelectorAll('.product-card')).reverse();
+      cards.forEach(c => grid.appendChild(c));
+    }
+  }
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      render();
+    });
+  });
+
+  function sortProducts() {
+    currentSort = document.getElementById('sortSelect').value;
+    render();
+  }
+
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Initial render
+  render();
+</script>
+</body>
+</html>

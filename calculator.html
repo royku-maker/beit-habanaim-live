@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מחשבון כמויות חומרי בניין – בית הבנאים</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      color: #1a1a1a;
+      background: #ffffff;
+      direction: rtl;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo img { height: 48px; display: block; }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #1a1a1a;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background .2s, color .2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { background: #1a56db; color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1a56db 0%, #1240a8 100%);
+      color: #fff;
+      text-align: center;
+      padding: 72px 24px 60px;
+    }
+    .hero h1 { font-size: 42px; font-weight: 800; margin-bottom: 14px; }
+    .hero p  { font-size: 20px; font-weight: 300; opacity: .9; }
+
+    /* ── MAIN SECTION ── */
+    .calc-section {
+      background: #f5f5f5;
+      padding: 60px 24px 80px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      color: #1a1a1a;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #1a56db;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* ── TABS ── */
+    .calc-wrapper { max-width: 760px; margin: 0 auto; }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      justify-content: center;
+    }
+    .tab-btn {
+      padding: 10px 20px;
+      border: 2px solid #1a56db;
+      background: transparent;
+      color: #1a56db;
+      font-family: 'Heebo', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .tab-btn.active,
+    .tab-btn:hover { background: #1a56db; color: #fff; }
+
+    /* ── CARD ── */
+    .calc-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.1);
+      padding: 36px 40px;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1a1a1a;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 15px;
+      color: #1a1a1a;
+      transition: border-color .2s;
+      background: #fff;
+      direction: rtl;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #1a56db;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .btn-calc {
+      width: 100%;
+      padding: 14px;
+      background: #1a56db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background .2s;
+    }
+    .btn-calc:hover { background: #a51818; }
+
+    /* ── RESULTS ── */
+    .result-box {
+      display: none;
+      margin-top: 24px;
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 24px 28px;
+    }
+    .result-box.visible { display: block; }
+    .result-box h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+    }
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #dbeafe;
+      font-size: 15px;
+    }
+    .result-item:last-child { border-bottom: none; }
+    .result-item .label { font-weight: 500; color: #374151; }
+    .result-item .value { font-weight: 700; color: #1a1a1a; font-size: 16px; }
+
+    .waste-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #6b7280;
+      font-style: italic;
+    }
+    .disclaimer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #9ca3af;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ── WhatsApp Floating ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 999;
+    }
+    .whatsapp-float a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      background: #25d366;
+      border-radius: 50%;
+      box-shadow: 0 4px 16px rgba(0,0,0,.25);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .whatsapp-float a:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,.3); }
+    .whatsapp-float svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .hero p  { font-size: 16px; }
+      .calc-card { padding: 24px 18px; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links a { font-size: 12px; padding: 5px 7px; }
+      .tab-btn { font-size: 13px; padding: 8px 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img src="logo.png" alt="בית הבנאים לוגו" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">אודות</a></li>
+      <li><a href="calculator.html" class="active">מחשבון</a></li>
+      <li><a href="videos.html">הדרכות</a></li>
+      <li><a href="top-products.html">דירוג מוצרים</a></li>
+      <li><a href="my-project.html">פרויקט שלי</a></li>
+      <li><a href="articles.html">מאמרים</a></li>
+      <li><a href="index.html#contact">יצירת קשר</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>מחשבון כמויות חומרי בניין</h1>
+  <p>חשב את הכמות הנכונה לפני שאתה קונה</p>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc-section">
+  <h2 class="section-title">בחר סוג חישוב</h2>
+
+  <div class="calc-wrapper">
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tiles">ריצוף</button>
+      <button class="tab-btn" data-tab="paint">צביעה</button>
+      <button class="tab-btn" data-tab="plaster">טיח / גבס</button>
+      <button class="tab-btn" data-tab="concrete">בטון</button>
+      <button class="tab-btn" data-tab="blocks">בלוקים</button>
+    </div>
+
+    <div class="calc-card">
+
+      <!-- ── TILES ── -->
+      <div class="tab-panel active" id="tab-tiles">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="t-length">אורך החדר (מטר)</label>
+            <input type="number" id="t-length" placeholder="לדוגמה: 5" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="t-width">רוחב החדר (מטר)</label>
+            <input type="number" id="t-width" placeholder="לדוגמה: 4" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="t-size">גודל האריח (ס"מ × ס"מ)</label>
+          <select id="t-size">
+            <option value="30x30">30 × 30</option>
+            <option value="40x40">40 × 40</option>
+            <option value="60x60" selected>60 × 60</option>
+            <option value="80x80">80 × 80</option>
+            <option value="custom">מותאם אישית</option>
+          </select>
+        </div>
+        <div class="form-group" id="t-custom-wrap" style="display:none">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="t-custom-w">רוחב אריח (ס"מ)</label>
+              <input type="number" id="t-custom-w" placeholder="60" min="1" />
+            </div>
+            <div class="form-group">
+              <label for="t-custom-h">אורך אריח (ס"מ)</label>
+              <input type="number" id="t-custom-h" placeholder="60" min="1" />
+            </div>
+          </div>
+        </div>
+        <button class="btn-calc" onclick="calcTiles()">חשב</button>
+        <div class="result-box" id="res-tiles">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">שטח כולל</span><span class="value" id="r-t-area">–</span></div>
+          <div class="result-item"><span class="label">מספר אריחים (כולל 10% פחת)</span><span class="value" id="r-t-tiles">–</span></div>
+          <div class="result-item"><span class="label">מספר קרטונים</span><span class="value" id="r-t-boxes">–</span></div>
+          <p class="waste-note">מומלץ להוסיף 10% בגלל שברים ופחת</p>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם איש מקצוע</p>
+      </div>
+
+      <!-- ── PAINT ── -->
+      <div class="tab-panel" id="tab-paint">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="p-length">אורך הקיר (מטר)</label>
+            <input type="number" id="p-length" placeholder="לדוגמה: 4" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="p-height">גובה הקיר (מטר)</label>
+            <input type="number" id="p-height" placeholder="לדוגמה: 2.7" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="p-walls">מספר קירות</label>
+            <input type="number" id="p-walls" placeholder="4" min="1" step="1" value="4" />
+          </div>
+          <div class="form-group">
+            <label for="p-minus">מינוס חלונות/דלתות (מ"ר)</label>
+            <input type="number" id="p-minus" placeholder="0" min="0" step="0.1" value="0" />
+          </div>
+        </div>
+        <button class="btn-calc" onclick="calcPaint()">חשב</button>
+        <div class="result-box" id="res-paint">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">שטח כולל לצביעה</span><span class="value" id="r-p-area">–</span></div>
+          <div class="result-item"><span class="label">ליטרים נדרשים (2 שכבות)</span><span class="value" id="r-p-liters">–</span></div>
+          <div class="result-item"><span class="label">פחים 4 ליטר</span><span class="value" id="r-p-4l">–</span></div>
+          <div class="result-item"><span class="label">פחים 18 ליטר</span><span class="value" id="r-p-18l">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם איש מקצוע</p>
+      </div>
+
+      <!-- ── PLASTER ── -->
+      <div class="tab-panel" id="tab-plaster">
+        <div class="form-group">
+          <label for="pl-area">שטח (מ"ר)</label>
+          <input type="number" id="pl-area" placeholder="לדוגמה: 20" min="0" step="0.1" />
+        </div>
+        <div class="form-group">
+          <label for="pl-thick">עובי שכבה (מ"מ)</label>
+          <select id="pl-thick">
+            <option value="5">5 מ"מ</option>
+            <option value="10" selected>10 מ"מ</option>
+            <option value="15">15 מ"מ</option>
+            <option value="20">20 מ"מ</option>
+          </select>
+        </div>
+        <button class="btn-calc" onclick="calcPlaster()">חשב</button>
+        <div class="result-box" id="res-plaster">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">ק"ג נדרשים</span><span class="value" id="r-pl-kg">–</span></div>
+          <div class="result-item"><span class="label">שקים (25 ק"ג לשק)</span><span class="value" id="r-pl-bags">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם איש מקצוע</p>
+      </div>
+
+      <!-- ── CONCRETE ── -->
+      <div class="tab-panel" id="tab-concrete">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="c-length">אורך (מ')</label>
+            <input type="number" id="c-length" placeholder="לדוגמה: 5" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="c-width">רוחב (מ')</label>
+            <input type="number" id="c-width" placeholder="לדוגמה: 3" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="c-thick">עובי (ס"מ)</label>
+          <input type="number" id="c-thick" placeholder="לדוגמה: 15" min="0" step="0.5" />
+        </div>
+        <button class="btn-calc" onclick="calcConcrete()">חשב</button>
+        <div class="result-box" id="res-concrete">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">נפח (מ"ק)</span><span class="value" id="r-c-vol">–</span></div>
+          <div class="result-item"><span class="label">שקי מלט 50 ק"ג</span><span class="value" id="r-c-cement">–</span></div>
+          <div class="result-item"><span class="label">חול (טון)</span><span class="value" id="r-c-sand">–</span></div>
+          <div class="result-item"><span class="label">חצץ (טון)</span><span class="value" id="r-c-gravel">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם איש מקצוע</p>
+      </div>
+
+      <!-- ── BLOCKS ── -->
+      <div class="tab-panel" id="tab-blocks">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="b-length">אורך קיר (מ')</label>
+            <input type="number" id="b-length" placeholder="לדוגמה: 6" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="b-height">גובה קיר (מ')</label>
+            <input type="number" id="b-height" placeholder="לדוגמה: 2.8" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="b-type">סוג בלוק</label>
+          <select id="b-type">
+            <option value="0.08">20 × 40 ס"מ</option>
+            <option value="0.06">15 × 40 ס"מ</option>
+            <option value="0.04">10 × 40 ס"מ</option>
+          </select>
+        </div>
+        <button class="btn-calc" onclick="calcBlocks()">חשב</button>
+        <div class="result-box" id="res-blocks">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">שטח קיר (מ"ר)</span><span class="value" id="r-b-area">–</span></div>
+          <div class="result-item"><span class="label">מספר בלוקים (כולל 5% פחת)</span><span class="value" id="r-b-count">–</span></div>
+          <div class="result-item"><span class="label">פלטות (40 בלוקים לפלטה)</span><span class="value" id="r-b-pallets">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם איש מקצוע</p>
+      </div>
+
+    </div><!-- /calc-card -->
+  </div><!-- /calc-wrapper -->
+</section>
+
+<!-- WhatsApp Float -->
+<div class="whatsapp-float">
+  <a href="https://wa.me/972523792776" target="_blank" rel="noopener" aria-label="צור קשר בוואטסאפ">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.003 2.667C8.638 2.667 2.667 8.637 2.667 16c0 2.35.64 4.55 1.752 6.45L2.667 29.333l7.1-1.73A13.27 13.27 0 0016.003 29.333C23.367 29.333 29.337 23.363 29.337 16S23.367 2.667 16.003 2.667zm7.13 18.43c-.3.843-1.77 1.613-2.43 1.663-.617.047-1.197.29-4.03-.843-3.397-1.37-5.57-4.833-5.74-5.057-.167-.223-1.353-1.797-1.353-3.427s.853-2.43 1.157-2.76c.3-.33.653-.413.87-.413l.623.012c.2.007.47-.077.733.56.3.69 1.017 2.35 1.107 2.52.09.167.15.363.027.583-.12.223-.183.36-.363.553-.18.197-.38.44-.543.59-.18.167-.367.35-.157.683.21.333.933 1.54 2.003 2.493 1.377 1.233 2.54 1.617 2.873 1.8.333.183.527.153.72-.09.197-.247.84-1.003 1.067-1.347.223-.343.447-.28.75-.167.3.113 1.9.897 2.227 1.06.33.163.547.247.627.383.083.137.083.797-.217 1.64z"/>
+    </svg>
+  </a>
+</div>
+
+<script>
+  // ── TAB SWITCHING ──
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Tiles: show/hide custom size fields
+  document.getElementById('t-size').addEventListener('change', function() {
+    document.getElementById('t-custom-wrap').style.display = this.value === 'custom' ? 'block' : 'none';
+  });
+
+  function fmt(n, dec = 2) { return parseFloat(n.toFixed(dec)).toLocaleString('he-IL'); }
+
+  function showResult(id) {
+    document.getElementById(id).classList.add('visible');
+  }
+
+  // ── TILES ──
+  function calcTiles() {
+    const l = parseFloat(document.getElementById('t-length').value) || 0;
+    const w = parseFloat(document.getElementById('t-width').value) || 0;
+    const sizeVal = document.getElementById('t-size').value;
+
+    let tw, th;
+    if (sizeVal === 'custom') {
+      tw = parseFloat(document.getElementById('t-custom-w').value) / 100 || 0.6;
+      th = parseFloat(document.getElementById('t-custom-h').value) / 100 || 0.6;
+    } else {
+      const parts = sizeVal.split('x');
+      tw = parseInt(parts[0]) / 100;
+      th = parseInt(parts[1]) / 100;
+    }
+
+    const area = l * w;
+    const tileArea = tw * th;
+    const tilesBase = area / tileArea;
+    const tilesWithWaste = Math.ceil(tilesBase * 1.10);
+
+    // box area depends on tile size (use actual tile size)
+    const boxArea = tileArea * 4; // rough: ~4 tiles per box by default
+    // more realistic: standard box covers 1.44m² for 60×60 (4 tiles), scale proportionally
+    const boxCoverageM2 = 1.44 * (tileArea / (0.6 * 0.6));
+    const boxes = Math.ceil((area * 1.10) / boxCoverageM2);
+
+    document.getElementById('r-t-area').textContent = fmt(area) + ' מ"ר';
+    document.getElementById('r-t-tiles').textContent = fmt(tilesWithWaste, 0) + ' אריחים';
+    document.getElementById('r-t-boxes').textContent = fmt(boxes, 0) + ' קרטונים';
+    showResult('res-tiles');
+  }
+
+  // ── PAINT ──
+  function calcPaint() {
+    const l = parseFloat(document.getElementById('p-length').value) || 0;
+    const h = parseFloat(document.getElementById('p-height').value) || 0;
+    const walls = parseFloat(document.getElementById('p-walls').value) || 1;
+    const minus = parseFloat(document.getElementById('p-minus').value) || 0;
+
+    const area = Math.max(0, l * h * walls - minus);
+    // 10m² per liter, 2 coats → 5m²/liter effective
+    const liters = Math.ceil(area / 5);
+    const cans4 = Math.ceil(liters / 4);
+    const cans18 = Math.ceil(liters / 18);
+
+    document.getElementById('r-p-area').textContent = fmt(area) + ' מ"ר';
+    document.getElementById('r-p-liters').textContent = fmt(liters, 0) + ' ליטר';
+    document.getElementById('r-p-4l').textContent = fmt(cans4, 0) + ' פחים';
+    document.getElementById('r-p-18l').textContent = fmt(cans18, 0) + ' פחים';
+    showResult('res-paint');
+  }
+
+  // ── PLASTER ──
+  function calcPlaster() {
+    const area = parseFloat(document.getElementById('pl-area').value) || 0;
+    const thick = parseFloat(document.getElementById('pl-thick').value) || 10;
+
+    const kg = area * thick * 1.5;
+    const bags = Math.ceil(kg / 25);
+
+    document.getElementById('r-pl-kg').textContent = fmt(kg, 0) + ' ק"ג';
+    document.getElementById('r-pl-bags').textContent = fmt(bags, 0) + ' שקים';
+    showResult('res-plaster');
+  }
+
+  // ── CONCRETE ──
+  function calcConcrete() {
+    const l = parseFloat(document.getElementById('c-length').value) || 0;
+    const w = parseFloat(document.getElementById('c-width').value) || 0;
+    const thick = parseFloat(document.getElementById('c-thick').value) || 0;
+
+    const vol = l * w * (thick / 100);
+    const cementBags = Math.ceil(vol * 6);
+    const sand = parseFloat((vol * 0.5).toFixed(2));    // ~0.5 ton/m³
+    const gravel = parseFloat((vol * 0.8).toFixed(2));  // ~0.8 ton/m³
+
+    document.getElementById('r-c-vol').textContent = fmt(vol) + ' מ"ק';
+    document.getElementById('r-c-cement').textContent = fmt(cementBags, 0) + ' שקים';
+    document.getElementById('r-c-sand').textContent = fmt(sand) + ' טון';
+    document.getElementById('r-c-gravel').textContent = fmt(gravel) + ' טון';
+    showResult('res-concrete');
+  }
+
+  // ── BLOCKS ──
+  function calcBlocks() {
+    const l = parseFloat(document.getElementById('b-length').value) || 0;
+    const h = parseFloat(document.getElementById('b-height').value) || 0;
+    const blockArea = parseFloat(document.getElementById('b-type').value); // m² per block (height in m × 0.4m)
+
+    const wallArea = l * h;
+    // block face area: width varies (10/15/20cm) × 40cm length
+    // value attribute stores block thickness; face = 0.4m × 0.2m = 0.08m² for 20cm etc.
+    const blocksBase = wallArea / blockArea;
+    const blocksTotal = Math.ceil(blocksBase * 1.05);
+    const pallets = Math.ceil(blocksTotal / 40);
+
+    document.getElementById('r-b-area').textContent = fmt(wallArea) + ' מ"ר';
+    document.getElementById('r-b-count').textContent = fmt(blocksTotal, 0) + ' בלוקים';
+    document.getElementById('r-b-pallets').textContent = fmt(pallets, 0) + ' פלטות';
+    showResult('res-blocks');
+  }
+</script>
+</body>
+</html>
