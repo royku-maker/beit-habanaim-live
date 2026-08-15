@@ -625,8 +625,8 @@
           <label for="b-type">סוג בלוק</label>
           <select id="b-type">
             <option value="0.08">20 × 40 ס"מ</option>
-            <option value="0.06">15 × 40 ס"מ</option>
-            <option value="0.04">10 × 40 ס"מ</option>
+            <option value="0.08">15 × 40 ס"מ</option>
+            <option value="0.08">10 × 40 ס"מ</option>
           </select>
         </div>
         <button class="btn-calc" onclick="calcBlocks()">חשב</button>
@@ -899,7 +899,7 @@
           <label for="fn-block">סוג בלוק</label>
           <select id="fn-block">
             <option value="0.08">20 × 40 ס"מ</option>
-            <option value="0.06" selected>15 × 40 ס"מ</option>
+            <option value="0.08" selected>15 × 40 ס"מ</option>
           </select>
         </div>
         <button class="btn-calc" onclick="calcFence()">חשב</button>
@@ -1127,9 +1127,10 @@
 
     // Boards with 10% waste
     const boards  = Math.ceil((area * layers / boardArea) * 1.10);
-    // CD profiles every 60cm → running meters ≈ area / 0.6, each bar = 3m
-    const cdBars  = Math.ceil(area / 0.6);
-    const cdMeters = cdBars * 3;
+    // CD profiles every 60cm on a roughly-square room: running meters ≈ area / 0.6
+    // (this already IS total linear meters, not a bar count — do not multiply by
+    // bar length again, that triples the real material need)
+    const cdMeters = Math.ceil(area / 0.6);
     // UD perimeter frame: sqrt(area)×4 per layer + 10%
     const udMeters = Math.ceil(Math.sqrt(area) * 4 * layers * 1.10);
     // Screws: ~30 per board
@@ -1170,11 +1171,12 @@
   function calcBlocks() {
     const l = parseFloat(document.getElementById('b-length').value) || 0;
     const h = parseFloat(document.getElementById('b-height').value) || 0;
-    const blockArea = parseFloat(document.getElementById('b-type').value); // m² per block (height in m × 0.4m)
+    const blockArea = parseFloat(document.getElementById('b-type').value); // m² per block face (0.4m × 0.2m — constant regardless of thickness)
 
     const wallArea = l * h;
-    // block face area: width varies (10/15/20cm) × 40cm length
-    // value attribute stores block thickness; face = 0.4m × 0.2m = 0.08m² for 20cm etc.
+    // Block thickness (10/15/20cm) sets the wall's depth, not its exposed face —
+    // every thickness shares the same 40×20cm face, so the block count per m² of
+    // wall does not change with the thickness selected.
     const blocksBase = wallArea / blockArea;
     const blocksTotal = Math.ceil(blocksBase * 1.05);
     const pallets = Math.ceil(blocksTotal / 40);
@@ -1346,7 +1348,7 @@
   function calcFence() {
     const length    = parseFloat(document.getElementById('fn-length').value) || 0;
     const height    = parseFloat(document.getElementById('fn-height').value) || 0;
-    const blockArea = parseFloat(document.getElementById('fn-block').value);
+    const blockArea = parseFloat(document.getElementById('fn-block').value); // m² per block face — constant regardless of thickness, see calcBlocks
 
     const wallArea      = length * height;
     const blocks        = Math.ceil((wallArea / blockArea) * 1.05);
