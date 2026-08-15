@@ -2,622 +2,1048 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>פרויקט שלי | בית הבנאים</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>שלח בקשת מחיר | בית הבנאים</title>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: 'Heebo', sans-serif;
-      background: #ffffff;
-      color: #1a1a1a;
-      direction: rtl;
+    :root {
+      --blue: #1a56db;
+      --blue-dark: #1240a4;
+      --green: #25D366;
+      --green-dark: #1da851;
+      --text: #1a1a1a;
+      --gray: #6b7280;
+      --bg: #f5f5f5;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --radius-btn: 4px;
+      --radius-card: 16px;
     }
 
-    /* ── NAV ── */
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      direction: rtl;
+      min-height: 100vh;
+      padding-bottom: 100px;
+    }
+
+    /* ─── NAV ─── */
     nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 60px;
       position: sticky;
       top: 0;
       z-index: 100;
-      background: #ffffff;
-      box-shadow: 0 2px 8px rgba(0,0,0,.10);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 32px;
-      height: 64px;
     }
-    .nav-logo img { height: 48px; display: block; }
-    .nav-links { display: flex; gap: 24px; list-style: none; }
-    .nav-links a {
+    .nav-logo img { height: 40px; display: block; }
+    .nav-back {
+      color: var(--blue);
       text-decoration: none;
-      color: #1a1a1a;
-      font-weight: 500;
       font-size: 15px;
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: #1a56db; }
-    .nav-links a.active { color: #1a56db; font-weight: 700; border-bottom: 2px solid #1a56db; padding-bottom: 2px; }
-    .nav-hamburger { display: none; background: none; border: none; font-size: 26px; cursor: pointer; }
-
-    @media (max-width: 768px) {
-      nav { padding: 0 16px; }
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 64px;
-        right: 0; left: 0;
-        background: #fff;
-        flex-direction: column;
-        padding: 16px 24px;
-        gap: 16px;
-        box-shadow: 0 4px 12px rgba(0,0,0,.12);
-      }
-      .nav-links.open { display: flex; }
-      .nav-hamburger { display: block; }
-    }
-
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, #1a56db 0%, #0e3a9e 100%);
-      color: #fff;
-      text-align: center;
-      padding: 60px 24px 48px;
-    }
-    .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; }
-    .hero p  { font-size: 1.1rem; font-weight: 400; opacity: .88; }
-
-    /* ── APP LAYOUT ── */
-    .app-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 32px 24px;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 24px;
-    }
-
-    @media (max-width: 900px) {
-      .app-container {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ── SIDEBAR ── */
-    .sidebar {
-      background: #f5f5f5;
-      border-radius: 12px;
-      padding: 20px 16px;
-      height: fit-content;
-    }
-    .sidebar h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: #1a1a1a; }
-
-    .project-list { list-style: none; margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
-
-    .project-item {
+      font-weight: 500;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #fff;
-      transition: background .15s, box-shadow .15s;
-      border: 2px solid transparent;
+      gap: 4px;
+      transition: opacity .2s;
     }
-    .project-item:hover { background: #e8eef9; }
-    .project-item.active { border-color: #1a56db; background: #e8eef9; }
-    .project-item-name { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-    .project-delete {
-      background: none; border: none; color: #999; font-size: 18px; cursor: pointer; padding: 0 4px; line-height: 1; opacity: 0; transition: opacity .15s, color .15s;
-    }
-    .project-item:hover .project-delete { opacity: 1; }
-    .project-delete:hover { color: #a51818; }
+    .nav-back:hover { opacity: .75; }
 
-    .new-project-btn {
+    /* ─── HERO ─── */
+    .hero {
+      background: #fff;
+      text-align: center;
+      padding: 36px 24px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 16px;
+      color: var(--gray);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ─── MAIN ─── */
+    .main {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius-card);
+      box-shadow: 0 1px 8px rgba(0,0,0,.07);
+      padding: 24px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 16px;
+    }
+
+    /* ─── STEP 1: three-field row ─── */
+    .step1-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 580px) {
+      .step1-grid { grid-template-columns: 1fr; }
+    }
+
+    label.field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    .field-label .ico { margin-left: 4px; }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
       width: 100%;
-      padding: 10px;
-      background: #1a56db;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      background: #fff;
+      direction: rtl;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(26,86,219,.12);
+    }
+    input.err, select.err { border-color: #ef4444 !important; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: left 12px center;
+      padding-left: 36px;
+    }
+
+    /* ─── SHAKE ANIMATION ─── */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    .shake { animation: shake .4s ease; }
+
+    /* ─── STEP 2: TABS ─── */
+    .tabs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      background: #f9fafb;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 12px;
       font-family: 'Heebo', sans-serif;
       font-size: 14px;
       font-weight: 600;
+      color: var(--gray);
       cursor: pointer;
-      transition: background .2s;
-    }
-    .new-project-btn:hover { background: #a51818; }
-
-    .new-project-input-wrap { display: none; margin-top: 12px; gap: 6px; flex-direction: column; }
-    .new-project-input-wrap.show { display: flex; }
-    .new-project-input {
-      padding: 8px 10px;
-      border: 1.5px solid #1a56db;
-      border-radius: 4px;
-      font-family: 'Heebo', sans-serif;
-      font-size: 14px;
-      outline: none;
-    }
-    .new-project-actions { display: flex; gap: 6px; }
-    .btn-confirm { flex: 1; padding: 8px; background: #1a56db; color: #fff; border: none; border-radius: 4px; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
-    .btn-confirm:hover { background: #0e3a9e; }
-    .btn-cancel  { flex: 1; padding: 8px; background: #e0e0e0; color: #1a1a1a; border: none; border-radius: 4px; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
-    .btn-cancel:hover  { background: #c8c8c8; }
-
-    /* ── ITEMS PANEL ── */
-    .items-panel {
-      background: #fff;
-      border-radius: 12px;
-      border: 1.5px solid #e8e8e8;
-      padding: 28px 24px;
-      min-height: 400px;
-    }
-
-    /* empty state */
-    .empty-state {
+      text-align: center;
+      line-height: 1.4;
+      transition: all .2s;
+      min-height: 72px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100%;
-      min-height: 300px;
-      gap: 16px;
-      color: #888;
+      gap: 4px;
     }
-    .empty-state .empty-icon { font-size: 64px; }
-    .empty-state p { font-size: 1.1rem; font-weight: 500; text-align: center; }
+    .tab-btn .tab-ico { font-size: 22px; }
+    .tab-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: #f0f5ff;
+    }
+    .tab-btn.active {
+      border-color: var(--blue);
+      background: #f0f5ff;
+      color: var(--blue);
+    }
 
-    /* project heading */
-    .project-heading { font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; color: #1a1a1a; }
+    /* ─── TAB PANELS ─── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
 
-    /* add item form */
-    .add-item-form {
-      background: #f5f5f5;
+    textarea.big {
+      min-height: 150px;
+      resize: vertical;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    @media (min-width: 600px) {
+      textarea.big { min-height: 200px; }
+    }
+
+    .parse-hint {
+      font-size: 13px;
+      color: var(--gray);
+      margin-top: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ─── MANUAL ADD FORM ─── */
+    .manual-grid {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .manual-row2 {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: end;
+    }
+    @media (max-width: 480px) {
+      .manual-grid { grid-template-columns: 1fr 1fr; }
+      .manual-grid > :first-child { grid-column: 1 / -1; }
+    }
+
+    /* ─── DROP ZONE ─── */
+    .drop-zone {
+      border: 2px dashed var(--border);
       border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 24px;
-    }
-    .add-item-form h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
-    .form-row { display: flex; gap: 8px; flex-wrap: wrap; }
-    .form-row input[type="text"] {
-      flex: 2; min-width: 120px;
-      padding: 9px 12px;
-      border: 1.5px solid #d0d0d0;
-      border-radius: 4px;
-      font-family: 'Heebo', sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: border-color .2s;
-    }
-    .form-row input[type="text"]:focus { border-color: #1a56db; }
-    .form-row input[type="number"] {
-      width: 80px;
-      padding: 9px 8px;
-      border: 1.5px solid #d0d0d0;
-      border-radius: 4px;
-      font-family: 'Heebo', sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: border-color .2s;
-    }
-    .form-row input[type="number"]:focus { border-color: #1a56db; }
-    .form-row select {
-      padding: 9px 8px;
-      border: 1.5px solid #d0d0d0;
-      border-radius: 4px;
-      font-family: 'Heebo', sans-serif;
-      font-size: 14px;
-      background: #fff;
-      outline: none;
+      padding: 40px 20px;
+      text-align: center;
       cursor: pointer;
+      transition: border-color .2s, background .2s;
+      position: relative;
     }
-    .form-row select:focus { border-color: #1a56db; }
-    .form-row .notes-input {
-      flex: 1.5; min-width: 100px;
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--blue);
+      background: #f0f5ff;
     }
-    .btn-add {
-      padding: 9px 20px;
-      background: #1a56db;
-      color: #fff;
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
       border: none;
-      border-radius: 4px;
-      font-family: 'Heebo', sans-serif;
+      padding: 0;
+    }
+    .drop-zone .dz-icon { font-size: 40px; margin-bottom: 12px; }
+    .drop-zone .dz-main { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .drop-zone .dz-sub { font-size: 13px; color: var(--gray); }
+    .file-success {
+      display: none;
+      margin-top: 14px;
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 8px;
+      padding: 12px 16px;
       font-size: 14px;
+      color: #16a34a;
+      font-weight: 600;
+      align-items: center;
+      gap: 8px;
+    }
+    .file-success.show { display: flex; }
+    .file-note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--gray);
+      text-align: center;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 14px 20px;
+      border-radius: var(--radius-btn);
+      font-family: 'Heebo', sans-serif;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      transition: background .2s;
+      border: none;
+      transition: background .2s, transform .1s;
+      text-decoration: none;
+      min-height: 48px;
       white-space: nowrap;
     }
-    .btn-add:hover { background: #a51818; }
+    .btn:active { transform: scale(.98); }
+    .btn-blue { background: var(--blue); color: #fff; }
+    .btn-blue:hover { background: var(--blue-dark); }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { background: var(--green-dark); }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--blue);
+      color: var(--blue);
+    }
+    .btn-outline:hover { background: #f0f5ff; }
+    .btn-full { width: 100%; }
+    .btn-sm { padding: 10px 16px; font-size: 14px; min-height: 40px; }
 
-    /* progress */
-    .progress-wrap { margin-bottom: 20px; }
-    .progress-label { display: flex; justify-content: space-between; font-size: 13px; color: #555; margin-bottom: 6px; }
-    .progress-bar-bg { background: #e0e0e0; border-radius: 99px; height: 8px; overflow: hidden; }
-    .progress-bar-fill { background: #1a56db; height: 100%; border-radius: 99px; transition: width .4s; }
-
-    /* items list */
-    .items-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    /* ─── ITEMS LIST ─── */
+    .items-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .items-header-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .items-count-badge {
+      background: var(--blue);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+    .items-empty {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 32px 20px;
+      text-align: center;
+      color: #aaa;
+      font-size: 14px;
+    }
     .item-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 12px 14px;
-      background: #f9f9f9;
+      background: #f9fafb;
       border-radius: 8px;
-      border: 1.5px solid #ececec;
-      transition: border-color .15s;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      font-size: 14px;
     }
-    .item-row:hover { border-color: #b0c4f0; }
-    .item-row.checked { opacity: .6; }
-    .item-checkbox { width: 18px; height: 18px; cursor: pointer; accent-color: #1a56db; flex-shrink: 0; }
-    .item-name { flex: 2; font-size: 14px; font-weight: 500; }
-    .item-row.checked .item-name { text-decoration: line-through; color: #888; }
-    .item-qty { font-size: 13px; color: #555; white-space: nowrap; }
-    .item-notes { flex: 1.5; font-size: 12px; color: #888; font-style: italic; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .item-delete {
-      background: none; border: none; color: #ccc; font-size: 18px; cursor: pointer; padding: 0 4px; line-height: 1; transition: color .15s;
+    .drag-handle {
+      color: #ccc;
+      cursor: grab;
+      font-size: 16px;
+      flex-shrink: 0;
     }
-    .item-delete:hover { color: #a51818; }
-
-    .no-items { text-align: center; color: #aaa; font-size: 14px; padding: 32px 0; }
-
-    /* whatsapp send */
-    .whatsapp-send-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 28px;
-      background: #25d366;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-family: 'Heebo', sans-serif;
-      font-size: 15px;
+    .item-name {
+      flex: 1;
+      font-weight: 600;
+      min-width: 0;
+      word-break: break-word;
+    }
+    .item-qty-unit {
+      color: var(--blue);
       font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .item-del {
+      background: none;
+      border: none;
+      color: #ef4444;
+      font-size: 20px;
       cursor: pointer;
-      transition: background .2s;
-      text-decoration: none;
+      padding: 0 2px;
+      line-height: 1;
+      flex-shrink: 0;
+      opacity: .6;
+      transition: opacity .2s;
     }
-    .whatsapp-send-btn:hover { background: #1aad54; }
+    .item-del:hover { opacity: 1; }
 
-    /* ── TIP SECTION ── */
-    .tip-section {
-      background: #f5f5f5;
-      padding: 32px 24px;
-      text-align: center;
-    }
-    .tip-card {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
+    /* ─── SOCIAL PROOF ─── */
+    .proof-strip {
+      display: flex;
+      justify-content: center;
+      gap: 0;
       background: #fff;
-      border: 1.5px solid #e0e0e0;
-      border-radius: 12px;
-      padding: 20px 28px;
-      max-width: 600px;
-      font-size: 15px;
+      border-radius: var(--radius-card);
+      box-shadow: 0 1px 8px rgba(0,0,0,.07);
+      overflow: hidden;
     }
-    .tip-card .tip-icon { font-size: 28px; flex-shrink: 0; }
-    .tip-card a { color: #1a56db; font-weight: 700; text-decoration: none; }
-    .tip-card a:hover { text-decoration: underline; }
+    .proof-item {
+      flex: 1;
+      text-align: center;
+      padding: 20px 12px;
+      border-left: 1px solid var(--border);
+    }
+    .proof-item:last-child { border-left: none; }
+    .proof-item .proof-num {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 2px;
+    }
+    .proof-item .proof-label {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.3;
+    }
 
-    /* ── WHATSAPP FAB ── */
-    .whatsapp-fab {
+    /* ─── STICKY BOTTOM BAR ─── */
+    .sticky-bar {
       position: fixed;
-      bottom: 28px;
-      left: 28px;
-      width: 58px; height: 58px;
-      background: #25d366;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,.22);
+      bottom: 0;
+      left: 0;
+      right: 0;
       z-index: 200;
-      transition: background .2s, transform .2s;
-      text-decoration: none;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 20px rgba(0,0,0,.10);
+      padding: 12px 16px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      display: flex;
+      gap: 10px;
     }
-    .whatsapp-fab:hover { background: #1aad54; transform: scale(1.08); }
-    .whatsapp-fab svg { width: 30px; height: 30px; fill: #fff; }
+    .sticky-bar .btn {
+      flex: 1;
+      font-size: 15px;
+      padding: 14px 12px;
+      min-height: 52px;
+    }
 
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 1.8rem; }
-      .form-row { flex-direction: column; }
-      .form-row input[type="text"],
-      .form-row input[type="number"],
-      .form-row select,
-      .btn-add { width: 100%; }
-      .tip-card { flex-direction: column; text-align: center; }
-      .item-notes { display: none; }
+    /* ─── VALIDATION ─── */
+    .val-error {
+      font-size: 12px;
+      color: #ef4444;
+      margin-top: 5px;
+      display: none;
     }
+    .val-error.show { display: block; }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="index.html"><img src="logo.png" alt="בית הבנאים" /></a>
-  <button class="nav-hamburger" id="hamburger" aria-label="תפריט">☰</button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html#about">אודות</a></li>
-    <li><a href="calculator.html">מחשבון</a></li>
-    <li><a href="videos.html">הדרכות</a></li>
-    <li><a href="top-products.html">דירוג מוצרים</a></li>
-    <li><a href="my-project.html" class="active">פרויקט שלי</a></li>
-    <li><a href="articles.html">מאמרים</a></li>
-    <li><a href="index.html#contact">יצירת קשר</a></li>
-  </ul>
+  <a href="index.html" class="nav-logo"><img src="logo.png" alt="בית הבנאים" /></a>
+  <a href="index.html" class="nav-back">← חזרה לאתר</a>
+  <div class="lang-switcher" style="display:flex;gap:4px;align-items:center;">
+    <button onclick="setRfqLang('he')" id="lang-btn-he" class="lang-btn" style="padding:4px 10px;border:1px solid #ddd;border-radius:4px;background:#1a56db;color:#fff;font-family:Heebo,sans-serif;font-size:13px;font-weight:600;cursor:pointer;">עב</button>
+    <button onclick="setRfqLang('ru')" id="lang-btn-ru" class="lang-btn" style="padding:4px 10px;border:1px solid #ddd;border-radius:4px;background:#fff;color:#1a1a1a;font-family:Heebo,sans-serif;font-size:13px;cursor:pointer;">РУС</button>
+    <button onclick="setRfqLang('ar')" id="lang-btn-ar" class="lang-btn" style="padding:4px 10px;border:1px solid #ddd;border-radius:4px;background:#fff;color:#1a1a1a;font-family:Heebo,sans-serif;font-size:13px;cursor:pointer;">عر</button>
+  </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <h1>פרויקט שלי</h1>
-  <p>נהל את רשימת הקניות לפרויקטי הבנייה שלך</p>
-</section>
+<div class="hero">
+  <h1 data-i18n="title">שלח בקשת מחיר תוך דקה</h1>
+  <p data-i18n="subtitle">כתוב מה אתה צריך — נחזור אליך עם מחיר תוך שעות</p>
+</div>
 
-<!-- APP -->
-<div class="app-container">
+<!-- MAIN -->
+<div class="main">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h2>הפרויקטים שלי</h2>
-    <ul class="project-list" id="projectList"></ul>
-
-    <button class="new-project-btn" id="newProjectBtn">+ פרויקט חדש</button>
-
-    <div class="new-project-input-wrap" id="newProjectWrap">
-      <input class="new-project-input" id="newProjectInput" type="text" placeholder="שם הפרויקט..." maxlength="60" />
-      <div class="new-project-actions">
-        <button class="btn-confirm" id="newProjectConfirm">✓ צור</button>
-        <button class="btn-cancel"  id="newProjectCancel">ביטול</button>
+  <!-- STEP 1 -->
+  <div class="card" id="step1Card">
+    <div class="card-title" data-i18n="step1_label">שלב 1 — מה, איפה, מתי?</div>
+    <div class="step1-grid">
+      <div>
+        <label class="field-label" data-i18n="area_label"><span class="ico">📍</span> אזור</label>
+        <select id="f-area">
+          <option value="">-- בחר אזור --</option>
+          <option value="תל אביב והמרכז">תל אביב והמרכז</option>
+          <option value="גוש דן">גוש דן</option>
+          <option value="ירושלים">ירושלים</option>
+          <option value="חיפה והצפון">חיפה והצפון</option>
+          <option value="באר שבע והדרום">באר שבע והדרום</option>
+          <option value="השרון">השרון</option>
+          <option value="השפלה">השפלה</option>
+          <option value="הגליל">הגליל</option>
+          <option value="הנגב">הנגב</option>
+        </select>
+        <div class="val-error" id="err-area">נא לבחור אזור</div>
+      </div>
+      <div>
+        <label class="field-label" data-i18n="timing_label"><span class="ico">📅</span> מתי צריך?</label>
+        <select id="f-timing">
+          <option value="בהקדם האפשרי">בהקדם האפשרי</option>
+          <option value="היום">היום</option>
+          <option value="מחר">מחר</option>
+          <option value="השבוע">השבוע</option>
+          <option value="בשבוע הבא">בשבוע הבא</option>
+          <option value="גמיש">גמיש</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label" data-i18n="phone_label"><span class="ico">📞</span> טלפון ליצירת קשר</label>
+        <input type="tel" id="f-phone" placeholder="050-0000000" inputmode="tel" />
+        <div class="val-error" id="err-phone">נא להזין מספר טלפון</div>
       </div>
     </div>
-  </aside>
+  </div>
 
-  <!-- ITEMS PANEL -->
-  <main class="items-panel" id="itemsPanel">
-    <div class="empty-state" id="emptyState">
-      <span class="empty-icon">🏗️</span>
-      <p>בחר פרויקט או צור חדש כדי להתחיל</p>
+  <!-- STEP 2: TABS -->
+  <div class="card" id="step2Card">
+    <div class="card-title">שלב 2 — מה אתה צריך?</div>
+
+    <div class="tabs-grid">
+      <button class="tab-btn active" onclick="switchTab('text')" id="tab-text">
+        <span class="tab-ico">📝</span>
+        <span data-i18n="tab_write">כתוב רשימה</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('file')" id="tab-file">
+        <span class="tab-ico">📷</span>
+        <span data-i18n="tab_upload">העלה תמונה</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('paste')" id="tab-paste">
+        <span class="tab-ico">📋</span>
+        <span data-i18n="tab_paste">הדבק מוואטסאפ</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('manual')" id="tab-manual">
+        <span class="tab-ico">➕</span>
+        <span data-i18n="tab_manual">הוסף ידנית</span>
+      </button>
     </div>
 
-    <div id="projectView" style="display:none;">
-      <h2 class="project-heading" id="projectHeading"></h2>
+    <!-- Tab: כתוב רשימה -->
+    <div class="tab-panel active" id="panel-text">
+      <textarea id="ta-text" class="big" placeholder="כתוב מה אתה צריך, שורה לכל פריט:&#10;&#10;5 גבס&#10;3 דבק סיקה&#10;2 צבע לבן 18 ליטר&#10;מקדחה בוש"></textarea>
+      <div class="parse-hint">✨ המערכת תמיר את הטקסט לרשימה מסודרת אוטומטית</div>
+      <button class="btn btn-blue btn-full" onclick="parseTextarea('ta-text')">המר לרשימה ←</button>
+    </div>
 
-      <!-- ADD FORM -->
-      <div class="add-item-form">
-        <h3>הוסף פריט לרשימה</h3>
-        <div class="form-row">
-          <input type="text"   id="itemName"  placeholder="שם הפריט (למשל: צמנט לבן)" maxlength="80" />
-          <input type="number" id="itemQty"   placeholder="כמות" min="0" step="any" />
-          <select id="itemUnit">
+    <!-- Tab: העלה תמונה -->
+    <div class="tab-panel" id="panel-file">
+      <div class="drop-zone" id="dropZone" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <input type="file" id="fileInput" accept="image/*,.pdf,.xlsx,.xls,.csv" onchange="onFileChange(event)" />
+        <div class="dz-icon">📷</div>
+        <div class="dz-main">גרור תמונה, צילום מסך, אקסל או PDF</div>
+        <div class="dz-sub">או לחץ לבחירת קובץ</div>
+      </div>
+      <div class="file-success" id="fileSuccess">
+        <span>✅</span>
+        <span id="fileName">הקובץ התקבל</span>
+      </div>
+      <div class="file-note">הקובץ יישלח לנציג שלנו שיעבד אותו ויחזור אליך</div>
+    </div>
+
+    <!-- Tab: הדבק מוואטסאפ -->
+    <div class="tab-panel" id="panel-paste">
+      <textarea id="ta-paste" class="big" placeholder="הדבק כאן הודעת וואטסאפ עם רשימת החומרים שלך..."></textarea>
+      <div class="parse-hint">✨ המערכת תמיר את הטקסט לרשימה מסודרת אוטומטית</div>
+      <button class="btn btn-blue btn-full" onclick="parseTextarea('ta-paste')">המר לרשימה ←</button>
+    </div>
+
+    <!-- Tab: הוסף ידנית -->
+    <div class="tab-panel" id="panel-manual">
+      <div class="manual-grid">
+        <div>
+          <label class="field-label">שם המוצר</label>
+          <input type="text" id="m-name" placeholder="לדוגמה: אריחי רצפה 60×60" />
+        </div>
+        <div>
+          <label class="field-label">כמות</label>
+          <input type="number" id="m-qty" min="0.01" step="any" placeholder="1" inputmode="decimal" />
+        </div>
+        <div>
+          <label class="field-label">יחידה</label>
+          <select id="m-unit">
             <option value="יחידה">יחידה</option>
+            <option value="קרטון">קרטון</option>
+            <option value="שק">שק</option>
             <option value='מ"ר'>מ"ר</option>
             <option value="מטר">מטר</option>
             <option value='ק"ג'>ק"ג</option>
-            <option value="שק">שק</option>
-            <option value="קרטון">קרטון</option>
-            <option value="ליטר">ליטר</option>
             <option value="טון">טון</option>
+            <option value="ליטר">ליטר</option>
+            <option value="פלטה">פלטה</option>
           </select>
-          <input type="text" id="itemNotes" class="notes-input" placeholder="הערות (אופציונלי)" maxlength="120" />
-          <button class="btn-add" id="addItemBtn">הוסף</button>
         </div>
       </div>
-
-      <!-- PROGRESS -->
-      <div class="progress-wrap" id="progressWrap">
-        <div class="progress-label">
-          <span id="progressText">0 מתוך 0 פריטים הושלמו</span>
-          <span id="progressPct">0%</span>
+      <div class="manual-row2">
+        <div>
+          <label class="field-label">מותג (אופציונלי)</label>
+          <input type="text" id="m-brand" placeholder="סיקה, נירלט..." />
         </div>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
-        </div>
+        <button class="btn btn-blue btn-sm" onclick="addManualItem()" style="margin-top: auto;">+ הוסף</button>
       </div>
-
-      <!-- LIST -->
-      <ul class="items-list" id="itemsList"></ul>
-      <p class="no-items" id="noItemsMsg" style="display:none;">עדיין אין פריטים. הוסף את הפריט הראשון ✨</p>
-
-      <!-- WHATSAPP SEND -->
-      <button class="whatsapp-send-btn" id="sendWhatsapp">
-        <svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:#fff;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        שלח לוואטסאפ
-      </button>
+      <div class="val-error show" id="err-manual" style="display:none; margin-top:8px;"></div>
     </div>
-  </main>
-</div>
 
-<!-- TIP SECTION -->
-<section class="tip-section">
-  <div class="tip-card">
-    <span class="tip-icon">💡</span>
-    <span>טיפ: השתמש <a href="calculator.html">במחשבון הכמויות שלנו</a> כדי לדעת כמה לקנות לפני שמוסיפים לרשימה</span>
+  </div><!-- /step2 card -->
+
+  <!-- ITEMS LIST -->
+  <div class="card" id="itemsCard">
+    <div class="items-header">
+      <div class="items-header-title">רשימת הבקשה שלך <span id="items-count-badge" class="items-count-badge" style="display:none">0</span></div>
+    </div>
+    <div id="items-list">
+      <div class="items-empty">הרשימה ריקה — הוסף פריטים למעלה</div>
+    </div>
   </div>
-</section>
 
-<!-- WHATSAPP FAB -->
-<a class="whatsapp-fab" href="https://wa.me/972523792776" target="_blank" rel="noopener" aria-label="וואטסאפ">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+  <!-- SOCIAL PROOF -->
+  <div class="proof-strip">
+    <div class="proof-item">
+      <div class="proof-num">500+</div>
+      <div class="proof-label">🏗️ קבלנים<br>משתמשים</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-num">שעות</div>
+      <div class="proof-label">⚡ מענה<br>מהיר</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-num">חינם</div>
+      <div class="proof-label">✅ ללא<br>עלות</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- STICKY BAR -->
+<div class="sticky-bar">
+  <button class="btn btn-green" onclick="submitWhatsApp()" data-i18n="btn_whatsapp">📲 שלח בוואטסאפ</button>
+  <button class="btn btn-blue" onclick="submitEmail()" data-i18n="btn_email">📧 שלח באימייל</button>
+</div>
 
 <script>
   // ── STATE ──
-  const STORAGE_KEY = 'beit-habanaim-projects';
-  let state = { projects: [], activeId: null };
+  let items = [];
+  let uploadedFileName = null;
+  let activeTab = 'text';
 
-  function loadState() {
-    try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { projects: [], activeId: null }; }
-    catch(e) { state = { projects: [], activeId: null }; }
-  }
-  function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-
-  function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
-
-  function activeProject() { return state.projects.find(p => p.id === state.activeId) || null; }
-
-  // ── RENDER SIDEBAR ──
-  function renderSidebar() {
-    const list = document.getElementById('projectList');
-    list.innerHTML = '';
-    state.projects.forEach(proj => {
-      const li = document.createElement('li');
-      li.className = 'project-item' + (proj.id === state.activeId ? ' active' : '');
-      li.innerHTML = `
-        <span class="project-item-name"><span>🏗️</span><span>${escHtml(proj.name)}</span></span>
-        <button class="project-delete" data-id="${proj.id}" title="מחק פרויקט">×</button>
-      `;
-      li.addEventListener('click', e => {
-        if (e.target.classList.contains('project-delete')) return;
-        state.activeId = proj.id;
-        saveState();
-        render();
-      });
-      li.querySelector('.project-delete').addEventListener('click', e => {
-        e.stopPropagation();
-        if (confirm(`למחוק את הפרויקט "${proj.name}"?`)) {
-          state.projects = state.projects.filter(p => p.id !== proj.id);
-          if (state.activeId === proj.id) state.activeId = state.projects[0]?.id || null;
-          saveState();
-          render();
-        }
-      });
-      list.appendChild(li);
+  // ── TABS ──
+  function switchTab(tab) {
+    activeTab = tab;
+    ['text','file','paste','manual'].forEach(t => {
+      document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+      document.getElementById('panel-' + t).classList.toggle('active', t === tab);
     });
   }
 
-  // ── RENDER ITEMS PANEL ──
-  function renderPanel() {
-    const proj = activeProject();
-    document.getElementById('emptyState').style.display   = proj ? 'none' : 'flex';
-    document.getElementById('projectView').style.display  = proj ? 'block' : 'none';
-    if (!proj) return;
-
-    document.getElementById('projectHeading').textContent = proj.name;
-
-    const items = proj.items || [];
-    const checked = items.filter(i => i.checked).length;
-    const total   = items.length;
-    const pct     = total ? Math.round((checked / total) * 100) : 0;
-
-    document.getElementById('progressText').textContent = `${checked} מתוך ${total} פריטים הושלמו`;
-    document.getElementById('progressPct').textContent  = `${pct}%`;
-    document.getElementById('progressFill').style.width = `${pct}%`;
-    document.getElementById('progressWrap').style.display = total ? 'block' : 'none';
-
-    const ul = document.getElementById('itemsList');
-    ul.innerHTML = '';
-    document.getElementById('noItemsMsg').style.display = total ? 'none' : 'block';
-
-    items.forEach((item, idx) => {
-      const li = document.createElement('li');
-      li.className = 'item-row' + (item.checked ? ' checked' : '');
-      li.innerHTML = `
-        <input type="checkbox" class="item-checkbox" ${item.checked ? 'checked' : ''} data-idx="${idx}" />
-        <span class="item-name">${escHtml(item.name)}</span>
-        <span class="item-qty">${escHtml(String(item.qty))} ${escHtml(item.unit)}</span>
-        <span class="item-notes">${escHtml(item.notes || '')}</span>
-        <button class="item-delete" data-idx="${idx}" title="מחק פריט">×</button>
-      `;
-      li.querySelector('.item-checkbox').addEventListener('change', e => {
-        proj.items[idx].checked = e.target.checked;
-        saveState();
-        render();
-      });
-      li.querySelector('.item-delete').addEventListener('click', () => {
-        proj.items.splice(idx, 1);
-        saveState();
-        render();
-      });
-      ul.appendChild(li);
+  // ── PARSE TEXTAREA ──
+  function parseTextarea(id) {
+    const raw = document.getElementById(id).value.trim();
+    if (!raw) return;
+    const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    let added = 0;
+    lines.forEach(line => {
+      // strip leading bullet/dash
+      line = line.replace(/^[-•*]\s*/, '');
+      const m = line.match(/^(\d+\.?\d*)\s+(.+)$/);
+      let qty, name;
+      if (m) {
+        qty = m[1];
+        name = m[2].trim();
+      } else {
+        qty = '1';
+        name = line;
+      }
+      if (name) {
+        items.push({ id: Date.now() + Math.random(), name, qty, unit: 'יחידה' });
+        added++;
+      }
     });
+    if (added > 0) {
+      document.getElementById(id).value = '';
+      renderItems();
+    }
   }
 
-  function render() { renderSidebar(); renderPanel(); }
+  // ── MANUAL ADD ──
+  function addManualItem() {
+    const name = document.getElementById('m-name').value.trim();
+    const qty  = document.getElementById('m-qty').value.trim() || '1';
+    const unit = document.getElementById('m-unit').value;
+    const brand = document.getElementById('m-brand').value.trim();
+    const errEl = document.getElementById('err-manual');
 
-  // ── ESCAPE HTML ──
-  function escHtml(str) {
-    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    if (!name) {
+      errEl.textContent = 'נא להזין שם מוצר';
+      errEl.style.display = 'block';
+      document.getElementById('m-name').classList.add('err');
+      return;
+    }
+    errEl.style.display = 'none';
+    document.getElementById('m-name').classList.remove('err');
+
+    const fullName = brand ? `${name} (${brand})` : name;
+    items.push({ id: Date.now() + Math.random(), name: fullName, qty, unit });
+    document.getElementById('m-name').value = '';
+    document.getElementById('m-qty').value = '';
+    document.getElementById('m-brand').value = '';
+    document.getElementById('m-name').focus();
+    renderItems();
   }
 
-  // ── NEW PROJECT ──
-  document.getElementById('newProjectBtn').addEventListener('click', () => {
-    const wrap = document.getElementById('newProjectWrap');
-    wrap.classList.add('show');
-    document.getElementById('newProjectInput').focus();
-  });
-  document.getElementById('newProjectCancel').addEventListener('click', () => {
-    document.getElementById('newProjectWrap').classList.remove('show');
-    document.getElementById('newProjectInput').value = '';
-  });
-  function confirmNewProject() {
-    const name = document.getElementById('newProjectInput').value.trim();
-    if (!name) { document.getElementById('newProjectInput').focus(); return; }
-    const proj = { id: genId(), name, items: [] };
-    state.projects.push(proj);
-    state.activeId = proj.id;
-    saveState();
-    document.getElementById('newProjectWrap').classList.remove('show');
-    document.getElementById('newProjectInput').value = '';
-    render();
-  }
-  document.getElementById('newProjectConfirm').addEventListener('click', confirmNewProject);
-  document.getElementById('newProjectInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') confirmNewProject();
-    if (e.key === 'Escape') document.getElementById('newProjectCancel').click();
-  });
+  // ── RENDER ITEMS ──
+  function renderItems() {
+    const container = document.getElementById('items-list');
+    const badge = document.getElementById('items-count-badge');
+    const header = document.querySelector('.items-header-title');
 
-  // ── ADD ITEM ──
-  document.getElementById('addItemBtn').addEventListener('click', addItem);
-  document.getElementById('itemName').addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
+    if (items.length === 0) {
+      container.innerHTML = '<div class="items-empty">הרשימה ריקה — הוסף פריטים למעלה</div>';
+      badge.style.display = 'none';
+      return;
+    }
 
-  function addItem() {
-    const proj = activeProject();
-    if (!proj) return;
-    const name  = document.getElementById('itemName').value.trim();
-    const qty   = document.getElementById('itemQty').value.trim() || '1';
-    const unit  = document.getElementById('itemUnit').value;
-    const notes = document.getElementById('itemNotes').value.trim();
-    if (!name) { document.getElementById('itemName').focus(); return; }
-    proj.items.push({ id: genId(), name, qty, unit, notes, checked: false });
-    saveState();
-    document.getElementById('itemName').value  = '';
-    document.getElementById('itemQty').value   = '';
-    document.getElementById('itemNotes').value = '';
-    document.getElementById('itemName').focus();
-    render();
+    badge.style.display = 'inline-block';
+    badge.textContent = items.length + ' פריטים';
+
+    container.innerHTML = items.map(item => `
+      <div class="item-row" data-id="${item.id}">
+        <span class="drag-handle">⠿</span>
+        <span class="item-name">${esc(item.name)}</span>
+        <span class="item-qty-unit">${esc(item.qty)} ${esc(item.unit)}</span>
+        <button class="item-del" onclick="deleteItem(${item.id})" aria-label="מחק פריט">×</button>
+      </div>
+    `).join('');
   }
 
-  // ── WHATSAPP SEND ──
-  document.getElementById('sendWhatsapp').addEventListener('click', () => {
-    const proj = activeProject();
-    if (!proj) return;
-    const items = proj.items || [];
-    if (!items.length) { alert('אין פריטים ברשימה'); return; }
+  function deleteItem(id) {
+    items = items.filter(i => Math.floor(i.id) !== Math.floor(id) && i.id !== id);
+    // more reliable: filter by reference via id stored as float
+    renderItems();
+  }
 
-    let msg = `שלום! רשימת הקניות שלי לפרויקט "${proj.name}":\n\n`;
-    items.forEach((item, i) => {
-      const status = item.checked ? '✅' : '⬜';
-      msg += `${status} ${i+1}. ${item.name} — ${item.qty} ${item.unit}`;
-      if (item.notes) msg += ` (${item.notes})`;
-      msg += '\n';
+  // ── FILE UPLOAD ──
+  function onFileChange(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    handleFile(file);
+  }
+  function onDragOver(e) { e.preventDefault(); document.getElementById('dropZone').classList.add('drag-over'); }
+  function onDragLeave(e) { document.getElementById('dropZone').classList.remove('drag-over'); }
+  function onDrop(e) {
+    e.preventDefault();
+    document.getElementById('dropZone').classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
+  }
+  function handleFile(file) {
+    uploadedFileName = file.name;
+    const s = document.getElementById('fileSuccess');
+    document.getElementById('fileName').textContent = '✅ ' + file.name + ' — הקובץ התקבל';
+    s.classList.add('show');
+  }
+
+  // ── VALIDATION ──
+  function validate() {
+    let ok = true;
+    const area = document.getElementById('f-area').value;
+    const phone = document.getElementById('f-phone').value.trim();
+    const areaErr = document.getElementById('err-area');
+    const phoneErr = document.getElementById('err-phone');
+    const areaEl = document.getElementById('f-area');
+    const phoneEl = document.getElementById('f-phone');
+
+    if (!area) {
+      areaEl.classList.add('err'); areaErr.classList.add('show'); ok = false;
+    } else {
+      areaEl.classList.remove('err'); areaErr.classList.remove('show');
+    }
+
+    if (!phone) {
+      phoneEl.classList.add('err'); phoneErr.classList.add('show'); ok = false;
+    } else {
+      phoneEl.classList.remove('err'); phoneErr.classList.remove('show');
+    }
+
+    // check content: items OR non-empty textarea OR file
+    const textVal = document.getElementById('ta-text').value.trim();
+    const pasteVal = document.getElementById('ta-paste').value.trim();
+    const hasContent = items.length > 0 || textVal || pasteVal || uploadedFileName;
+
+    if (!ok) {
+      document.getElementById('step1Card').classList.add('shake');
+      setTimeout(() => document.getElementById('step1Card').classList.remove('shake'), 500);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return false;
+    }
+
+    if (!hasContent) {
+      document.getElementById('step2Card').classList.add('shake');
+      setTimeout(() => document.getElementById('step2Card').classList.remove('shake'), 500);
+      return false;
+    }
+
+    return true;
+  }
+
+  // ── BUILD MESSAGE ──
+  function buildMessage() {
+    const area   = document.getElementById('f-area').value;
+    const timing = document.getElementById('f-timing').value;
+    const phone  = document.getElementById('f-phone').value.trim();
+    const today  = new Date().toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const textVal  = document.getElementById('ta-text').value.trim();
+    const pasteVal = document.getElementById('ta-paste').value.trim();
+
+    let contentSection = '';
+    if (items.length > 0) {
+      contentSection = items.map(i => `• ${i.name} — ${i.qty} ${i.unit}`).join('\n');
+    } else if (textVal) {
+      contentSection = textVal;
+    } else if (pasteVal) {
+      contentSection = pasteVal;
+    }
+
+    const lines = [
+      '🏗️ *בקשת הצעת מחיר — בית הבנאים*',
+      '',
+      `📍 אזור: ${area}`,
+      `📅 מועד: ${timing}`,
+      `📞 טלפון: ${phone}`,
+      '',
+      '📋 *מה צריך:*',
+      contentSection,
+    ];
+
+    if (uploadedFileName) {
+      lines.push(`📎 צורף קובץ: ${uploadedFileName}`);
+    }
+
+    lines.push('', `⏰ ${today}`);
+
+    return lines.join('\n');
+  }
+
+  // ── SUBMIT WHATSAPP ──
+  function submitWhatsApp() {
+    if (!validate()) return;
+    const msg = buildMessage();
+    window.open('https://wa.me/972523792776?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+  }
+
+  // ── SUBMIT EMAIL ──
+  function submitEmail() {
+    if (!validate()) return;
+    const area  = document.getElementById('f-area').value;
+    const phone = document.getElementById('f-phone').value.trim();
+    const msg   = buildMessage();
+    const subject = encodeURIComponent(`בקשת מחיר | ${area} | ${phone}`);
+    const body    = encodeURIComponent(msg);
+    window.location.href = `mailto:beithabanaim@gmail.com?subject=${subject}&body=${body}`;
+  }
+
+  // ── DELETE (fix float id matching) ──
+  // re-implement deleteItem using string IDs
+  function deleteItem(idStr) {
+    items = items.filter(i => String(i.id) !== String(idStr));
+    renderItems();
+  }
+
+  // fix: renderItems should output string id in onclick
+  function renderItems() {
+    const container = document.getElementById('items-list');
+    const badge = document.getElementById('items-count-badge');
+
+    if (items.length === 0) {
+      container.innerHTML = '<div class="items-empty">הרשימה ריקה — הוסף פריטים למעלה</div>';
+      badge.style.display = 'none';
+      return;
+    }
+
+    badge.style.display = 'inline-block';
+    badge.textContent = items.length + ' פריטים';
+
+    container.innerHTML = items.map(item => `
+      <div class="item-row">
+        <span class="drag-handle">⠿</span>
+        <span class="item-name">${esc(item.name)}</span>
+        <span class="item-qty-unit">${esc(item.qty)} ${esc(item.unit)}</span>
+        <button class="item-del" onclick="deleteItem('${String(item.id).replace(/'/g,"\\'")}')">×</button>
+      </div>
+    `).join('');
+  }
+
+  // fix: addManualItem should also use string ids
+  function addManualItem() {
+    const name = document.getElementById('m-name').value.trim();
+    const qty  = document.getElementById('m-qty').value.trim() || '1';
+    const unit = document.getElementById('m-unit').value;
+    const brand = document.getElementById('m-brand').value.trim();
+    const errEl = document.getElementById('err-manual');
+
+    if (!name) {
+      errEl.textContent = 'נא להזין שם מוצר';
+      errEl.style.display = 'block';
+      document.getElementById('m-name').classList.add('err');
+      return;
+    }
+    errEl.style.display = 'none';
+    document.getElementById('m-name').classList.remove('err');
+
+    const fullName = brand ? `${name} (${brand})` : name;
+    items.push({ id: String(Date.now()) + String(Math.random()).slice(2, 7), name: fullName, qty, unit });
+    document.getElementById('m-name').value = '';
+    document.getElementById('m-qty').value = '';
+    document.getElementById('m-brand').value = '';
+    document.getElementById('m-name').focus();
+    renderItems();
+  }
+
+  // also fix parseTextarea to use string IDs
+  function parseTextarea(id) {
+    const raw = document.getElementById(id).value.trim();
+    if (!raw) return;
+    const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    let added = 0;
+    lines.forEach(line => {
+      line = line.replace(/^[-•*]\s*/, '');
+      const m = line.match(/^(\d+\.?\d*)\s+(.+)$/);
+      let qty, name;
+      if (m) { qty = m[1]; name = m[2].trim(); }
+      else { qty = '1'; name = line; }
+      if (name) {
+        items.push({ id: String(Date.now()) + String(Math.random()).slice(2,7), name, qty, unit: 'יחידה' });
+        added++;
+      }
     });
-    msg += '\nתודה, בית הבנאים 🏗️';
+    if (added > 0) {
+      document.getElementById(id).value = '';
+      renderItems();
+    }
+  }
 
-    const phone = '972523792776';
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+  // ── UTILS ──
+  function esc(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
+  }
+
+  // ── ENTER KEY on manual fields ──
+  ['m-name','m-qty','m-brand'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addManualItem(); } });
   });
+</script>
 
-  // ── NAV HAMBURGER ──
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('open');
+<script>
+// ── LANGUAGE SWITCHER ──
+var TRANSLATIONS_RFQ = {
+  he: {
+    title: 'שלח בקשת מחיר תוך דקה',
+    subtitle: 'כתוב מה אתה צריך — נחזור אליך עם מחיר תוך שעות',
+    step1_label: 'שלב 1 — מה, איפה, מתי?',
+    area_label: '📍 אזור',
+    timing_label: '📅 מתי צריך?',
+    phone_label: '📞 טלפון ליצירת קשר',
+    tab_write: '📝 כתוב רשימה',
+    tab_upload: '📷 העלה תמונה',
+    tab_manual: '➕ הוסף ידנית',
+    tab_paste: '📋 הדבק מוואטסאפ',
+    btn_whatsapp: '📲 שלח בוואטסאפ',
+    btn_email: '📧 שלח באימייל',
+    textarea_placeholder: 'דוגמה:\n\n10 לוחות גבס\n3 דבק סיקה\n2 צבע לבן 18 ליטר\n1 מקדחת בוש',
+    parse_btn: 'המר לרשימה →'
+  },
+  ru: {
+    title: 'Запрос цен за 60 секунд',
+    subtitle: 'Напишите что нужно — мы вернёмся с ценой в течение часов',
+    step1_label: 'Шаг 1 — Что, Где, Когда?',
+    area_label: '📍 Район',
+    timing_label: '📅 Когда нужно?',
+    phone_label: '📞 Номер телефона',
+    tab_write: '📝 Написать список',
+    tab_upload: '📷 Загрузить фото',
+    tab_manual: '➕ Добавить вручную',
+    tab_paste: '📋 Вставить из WhatsApp',
+    btn_whatsapp: '📲 Отправить в WhatsApp',
+    btn_email: '📧 Отправить на email',
+    textarea_placeholder: 'Пример:\n\n10 листов гипсокартона\n3 клей Sika\n2 белая краска 18л\n1 дрель Bosch',
+    parse_btn: 'Преобразовать в список →'
+  },
+  ar: {
+    title: 'أرسل طلب سعر في دقيقة',
+    subtitle: 'اكتب ما تحتاجه — سنعود إليك بسعر خلال ساعات',
+    step1_label: 'الخطوة 1 — ماذا، أين، متى؟',
+    area_label: '📍 المنطقة',
+    timing_label: '📅 متى تحتاجه؟',
+    phone_label: '📞 رقم الهاتف',
+    tab_write: '📝 اكتب قائمة',
+    tab_upload: '📷 رفع صورة',
+    tab_manual: '➕ إضافة يدوية',
+    tab_paste: '📋 لصق من واتساب',
+    btn_whatsapp: '📲 إرسال عبر واتساب',
+    btn_email: '📧 إرسال بالبريد',
+    textarea_placeholder: 'مثال:\n\n10 ألواح جبس\n3 لاصق سيكا\n2 دهان أبيض 18 لتر\n1 مثقاب بوش',
+    parse_btn: 'تحويل إلى قائمة ←'
+  }
+};
+
+var rfqLang = localStorage.getItem('bh-lang') || 'he';
+
+function setRfqLang(lang) {
+  rfqLang = lang;
+  localStorage.setItem('bh-lang', lang);
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (TRANSLATIONS_RFQ[lang] && TRANSLATIONS_RFQ[lang][key]) {
+      el.innerHTML = TRANSLATIONS_RFQ[lang][key].replace(/\n/g, '<br>');
+    }
   });
+  // Update textarea placeholders
+  var ta = document.querySelector('textarea');
+  if (ta) ta.placeholder = TRANSLATIONS_RFQ[lang].textarea_placeholder;
 
-  // ── INIT ──
-  loadState();
-  render();
+  // Update language buttons
+  ['he','ru','ar'].forEach(function(l) {
+    var btn = document.getElementById('lang-btn-' + l);
+    if (btn) {
+      btn.style.background = lang === l ? '#1a56db' : '#fff';
+      btn.style.color = lang === l ? '#fff' : '#1a1a1a';
+    }
+  });
+}
+
+if (rfqLang !== 'he') setRfqLang(rfqLang);
 </script>
 </body>
 </html>

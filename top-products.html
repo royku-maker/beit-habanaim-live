@@ -366,8 +366,8 @@
       <button class="filter-btn" data-cat="צביעה">צביעה</button>
       <button class="filter-btn" data-cat="איטום">איטום</button>
       <button class="filter-btn" data-cat="כלי עבודה">כלי עבודה</button>
-      <button class="filter-btn" data-cat="חיבורים">חיבורים</button>
       <button class="filter-btn" data-cat="גבס">גבס</button>
+      <button class="filter-btn" data-cat="חיבורים">חיבורים</button>
     </div>
     <div class="sort-wrap">
       <label for="sortSelect">מיין לפי:</label>
@@ -418,150 +418,62 @@
 
 <script>
   const products = [
-    {
-      id: 1,
-      name: "ניר-לט פריימר אחיד",
-      brand: "ניר-לט",
-      category: "ריצוף",
-      rating: 4.8,
-      reviews: 63,
-      desc: "פריימר איכותי לכל סוגי המשטחים לפני ריצוף",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80",
-      recommended: true,
-      order: 1
-    },
-    {
-      id: 2,
-      name: "דבק אריחים פלקסיבל",
-      brand: "סיקה",
-      category: "ריצוף",
-      rating: 4.7,
-      reviews: 51,
-      desc: "דבק גמיש מעולה לאריחים גדולים ופורצלן",
-      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80",
-      recommended: false,
-      order: 2
-    },
-    {
-      id: 3,
-      name: "צבע חיצוני פרמיום",
-      brand: "דולפין",
-      category: "צביעה",
-      rating: 4.9,
-      reviews: 89,
-      desc: "עמיד בתנאי חוץ קשים, כיסוי מעולה",
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&q=80",
-      recommended: true,
-      order: 3
-    },
-    {
-      id: 4,
-      name: "פריימר אנטי עובש",
-      brand: "נירלט",
-      category: "צביעה",
-      rating: 4.6,
-      reviews: 34,
-      desc: "מניעת עובש לשנים רבות, מתאים למקלחות",
-      image: "https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=400&q=80",
-      recommended: false,
-      order: 4
-    },
-    {
-      id: 5,
-      name: "ממברנה איטום גמישה",
-      brand: "סיקה",
-      category: "איטום",
-      rating: 4.8,
-      reviews: 72,
-      desc: "איטום מקיר לקיר, גמיש ועמיד לאורך שנים",
-      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80",
-      recommended: true,
-      order: 5
-    },
-    {
-      id: 6,
-      name: "פוגה אפוקסי",
-      brand: "יעקובי",
-      category: "ריצוף",
-      rating: 4.5,
-      reviews: 28,
-      desc: "פוגה עמידה בלחות, אינה מצהיבה",
-      image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&q=80",
-      recommended: false,
-      order: 6
-    },
-    {
-      id: 7,
-      name: "מקדחה מקצועית 18V",
-      brand: "מקיטה",
-      category: "כלי עבודה",
-      rating: 4.9,
-      reviews: 112,
-      desc: "חזקה, קלה, סוללה ארוכה במיוחד",
-      image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&q=80",
-      recommended: true,
-      order: 7
-    },
-    {
-      id: 8,
-      name: 'גילאי גבס 12.5 מ"מ',
-      brand: "חברת גבס",
-      category: "גבס",
-      rating: 4.7,
-      reviews: 44,
-      desc: "גבס עמיד ואחיד, מתאים לתקרות וקירות",
-      image: "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=400&q=80",
-      recommended: false,
-      order: 8
-    },
-    {
-      id: 9,
-      name: "ברגים ודיבלים מקצועיים",
-      brand: "פישר",
-      category: "חיבורים",
-      rating: 4.6,
-      reviews: 67,
-      desc: "אחיזה מעולה בכל סוגי הקיר",
-      image: "https://images.unsplash.com/photo-1609205807107-2d5d00f17463?w=400&q=80",
-      recommended: false,
-      order: 9
-    },
-    {
-      id: 10,
-      name: "טיח פנים מוכן",
-      brand: "טיכל",
-      category: "גבס",
-      rating: 4.5,
-      reviews: 39,
-      desc: "טיח מוכן מיידית, אחיד ונוח לעבודה",
-      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80",
-      recommended: false,
-      order: 10
-    },
-    {
-      id: 11,
-      name: "מברגה מקצועית",
-      brand: "בוש",
-      category: "כלי עבודה",
-      rating: 4.8,
-      reviews: 95,
-      desc: "דיוק גבוה, מנוע חזק לעבודות כבדות",
-      image: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&q=80",
-      recommended: false,
-      order: 11
-    },
-    {
-      id: 12,
-      name: "איטום גג נוזלי",
-      brand: "נירלט",
-      category: "איטום",
-      rating: 4.7,
-      reviews: 56,
-      desc: "יישום קל, עמיד לאורך שנים בתנאי ישראל",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80",
-      recommended: false,
-      order: 12
-    }
+    // ריצוף (12)
+    { id: 1,  name: 'ניר-לט פריימר אחיד 2000',              brand: 'ניר-לט',   category: 'ריצוף',      rating: 4.8, reviews: 63,  desc: 'פריימר מקצועי לכל סוגי המשטחים לפני ריצוף וחיפוי',                         image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01a3?w=400&q=80', recommended: true,  order: 1  },
+    { id: 2,  name: 'דבק אריחים פלקסיבל C2 סיקה',           brand: 'סיקה',     category: 'ריצוף',      rating: 4.9, reviews: 117, desc: 'דבק גמיש מסוג C2 לאריחים גדולים, פורצלן ומשטחי חוץ',                       image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&q=80', recommended: true,  order: 2  },
+    { id: 3,  name: 'פוגה אפוקסי Starlike EVO',              brand: 'לייטנס',   category: 'ריצוף',      rating: 4.7, reviews: 44,  desc: 'פוגה אפוקסי פרמיום עמידה בכימיקלים ולחות',                                image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&q=80', recommended: false, order: 3  },
+    { id: 4,  name: 'דבק לקרמיקה Mapei Keraflex',            brand: 'מאפיי',    category: 'ריצוף',      rating: 4.6, reviews: 89,  desc: 'דבק ברמה מקצועית לריצוף קרמיקה ופורצלן',                                  image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80', recommended: false, order: 4  },
+    { id: 5,  name: 'פריימר חד-רכיבי Weber PR360',           brand: 'וובר',     category: 'ריצוף',      rating: 4.5, reviews: 31,  desc: 'פריימר מהיר ייבוש למשטחים חלקים לפני הדבקה',                              image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01a3?w=400&q=80', recommended: false, order: 5  },
+    { id: 6,  name: 'פוגה צמנטית Mapei Ultracolor Plus FA',  brand: 'מאפיי',    category: 'ריצוף',      rating: 4.8, reviews: 76,  desc: 'פוגה עמידה בדהייה, 130 גוונים, מתאימה לפנים וחוץ',                       image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&q=80', recommended: true,  order: 6  },
+    { id: 7,  name: 'בסיס ריצוף Schluter DITRA',             brand: 'שלוטר',    category: 'ריצוף',      rating: 4.7, reviews: 28,  desc: 'מנתק עומסים תחת אריחי פורצלן גדולים',                                     image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&q=80', recommended: false, order: 7  },
+    { id: 8,  name: 'דבק לבן עוצמתי Sika CeramicFlex',       brand: 'סיקה',     category: 'ריצוף',      rating: 4.7, reviews: 52,  desc: 'דבק לבן גמיש C2TE לאריחים לבנים ומרקמים עדינים',                         image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80', recommended: false, order: 8  },
+    { id: 9,  name: 'יעקובי פוגה לבנה 1 ק"ג',               brand: 'יעקובי',   category: 'ריצוף',      rating: 4.5, reviews: 38,  desc: 'פוגה לבנה קלאסית לאמבטיות ומטבחים',                                       image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&q=80', recommended: false, order: 9  },
+    { id: 10, name: 'מגרד ריצוף Raimondi Ergo',              brand: 'ריימונדי',  category: 'ריצוף',      rating: 4.6, reviews: 19,  desc: 'מגרד ארגונומי להורדת עודפי פוגה ויישור',                                  image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80', recommended: false, order: 10 },
+    { id: 11, name: 'פריימר עמוק חדירה Mapei Eco Prim Grip', brand: 'מאפיי',    category: 'ריצוף',      rating: 4.8, reviews: 61,  desc: 'פריימר לחיפוי על גבי משטחים חלקים ואריחים קיימים',                        image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01a3?w=400&q=80', recommended: true,  order: 11 },
+    { id: 12, name: 'דבק אפוקסי Mapei Kerapoxy',             brand: 'מאפיי',    category: 'ריצוף',      rating: 4.9, reviews: 34,  desc: 'דבק ופוגה דו-רכיבי לסביבות תעשייתיות וכימיות',                           image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80', recommended: false, order: 12 },
+
+    // צביעה (8)
+    { id: 13, name: 'צבע חיצוני דולפין אקרילי 18L',         brand: 'דולפין',   category: 'צביעה',      rating: 4.9, reviews: 89,  desc: 'עמיד בתנאי חוץ קשים, כיסוי מעולה, אחריות 8 שנה',                        image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=400&q=80', recommended: true,  order: 13 },
+    { id: 14, name: 'ניר-לט Extra Cover פנים 18L',           brand: 'ניר-לט',   category: 'צביעה',      rating: 4.8, reviews: 112, desc: 'כיסוי מקסימלי בשכבה אחת לקירות פנים',                                     image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&q=80', recommended: true,  order: 14 },
+    { id: 15, name: 'פריימר אנטי-עובש ניר-לט',              brand: 'ניר-לט',   category: 'צביעה',      rating: 4.6, reviews: 34,  desc: 'מניעת עובש לשנים רבות, מתאים למקלחות וחדרי רחצה',                        image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01a3?w=400&q=80', recommended: false, order: 15 },
+    { id: 16, name: 'צבע פחמן Tambour Plaster 18L',          brand: 'תמבור',    category: 'צביעה',      rating: 4.7, reviews: 67,  desc: 'מרקם סיד מיוחד לסגנון כפרי ומדיטרני',                                    image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=400&q=80', recommended: false, order: 16 },
+    { id: 17, name: 'צבע חוץ פרמיום Kansai Weather',         brand: 'קנסאי',    category: 'צביעה',      rating: 4.8, reviews: 43,  desc: 'עמיד ב-UV ולחות, מתאים לחומה ישראלית',                                   image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&q=80', recommended: false, order: 17 },
+    { id: 18, name: 'צבע אנטי-רטיבות Dulux Weathershield',  brand: 'דלוקס',    category: 'צביעה',      rating: 4.6, reviews: 28,  desc: 'הגנה כפולה מפני גשם ולחות',                                               image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=400&q=80', recommended: false, order: 18 },
+    { id: 19, name: 'פריימר קיר ניר-לט Universal',           brand: 'ניר-לט',   category: 'צביעה',      rating: 4.7, reviews: 55,  desc: 'פריימר בסיס אוניברסלי לפני כל סוג צבע',                                  image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01a3?w=400&q=80', recommended: false, order: 19 },
+    { id: 20, name: 'צבע מתכות Hammerlux כסוף',              brand: 'המרלוקס',  category: 'צביעה',      rating: 4.5, reviews: 22,  desc: 'צבע לברזל ומתכת עמיד בחלודה',                                            image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&q=80', recommended: false, order: 20 },
+
+    // איטום (6)
+    { id: 21, name: 'ממברנה גמישה Sikalastic 590',           brand: 'סיקה',     category: 'איטום',      rating: 4.8, reviews: 72,  desc: 'ממברנה נוזלית גמישה לאיטום גגות ומרפסות',                                 image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80', recommended: true,  order: 21 },
+    { id: 22, name: 'איטום גג Nirlat Aqua Stop',              brand: 'ניר-לט',   category: 'איטום',      rating: 4.7, reviews: 56,  desc: 'יישום קל, עמיד לאורך שנים בתנאי ישראל',                                  image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80', recommended: false, order: 22 },
+    { id: 23, name: 'פוליאוריאה Sika Combiflex',              brand: 'סיקה',     category: 'איטום',      rating: 4.9, reviews: 38,  desc: 'מערכת איטום גמישה לחריצים ותפרי התפשטות',                                image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80', recommended: true,  order: 23 },
+    { id: 24, name: 'ביטומן עצמי-דביק TechnoNICOL',          brand: 'טכנוניקול', category: 'איטום',      rating: 4.6, reviews: 29,  desc: 'גיליונות ביטומן לאיטום יסודות ותת-קרקעי',                                image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80', recommended: false, order: 24 },
+    { id: 25, name: 'פוליאוריתן Mapei Mapelastic',            brand: 'מאפיי',    category: 'איטום',      rating: 4.8, reviews: 41,  desc: 'ציפוי אלסטי דו-רכיבי לאגני שחייה וגגות',                                 image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80', recommended: false, order: 25 },
+    { id: 26, name: 'סיליקון מבנה Sika Silbond',              brand: 'סיקה',     category: 'איטום',      rating: 4.7, reviews: 48,  desc: 'סיליקון מקצועי לחלונות, חיבורי אלומיניום ואינסטלציה',                    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80', recommended: false, order: 26 },
+
+    // כלי עבודה (10)
+    { id: 27, name: 'מקדחה Makita DHP484Z 18V',              brand: 'מקיטה',    category: 'כלי עבודה',  rating: 4.9, reviews: 112, desc: 'מקדחה מקצועית 18V, מנוע BL, ללא מברשות',                                  image: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=400&q=80', recommended: true,  order: 27 },
+    { id: 28, name: 'מברגה דרבנית Bosch GSB 18V-55',         brand: 'בוש',      category: 'כלי עבודה',  rating: 4.8, reviews: 95,  desc: 'מברגה מקצועית 55Nm, כולל שתי סוללות',                                    image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&q=80', recommended: true,  order: 28 },
+    { id: 29, name: 'גרייזר זוויתי Makita GA5030',           brand: 'מקיטה',    category: 'כלי עבודה',  rating: 4.7, reviews: 78,  desc: 'גרייזר 125מ"מ 720W לחיתוך וליטוש',                                       image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&q=80', recommended: false, order: 29 },
+    { id: 30, name: 'פטיש המרי Bosch GBH 2-26 F SDS+',       brand: 'בוש',      category: 'כלי עבודה',  rating: 4.9, reviews: 64,  desc: 'פטיש קידוח ושבירה SDS-Plus 2.7J',                                         image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&q=80', recommended: true,  order: 30 },
+    { id: 31, name: 'מסור עגול Makita HS6601',               brand: 'מקיטה',    category: 'כלי עבודה',  rating: 4.7, reviews: 41,  desc: 'מסור עגול 165מ"מ 1200W לחיתוך עץ ולמינציה',                              image: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=400&q=80', recommended: false, order: 31 },
+    { id: 32, name: 'מסור הדדי Bosch GSA 18V-LI',            brand: 'בוש',      category: 'כלי עבודה',  rating: 4.6, reviews: 33,  desc: 'מסור הדדי אלחוטי לצינורות, עץ ומתכת',                                    image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&q=80', recommended: false, order: 32 },
+    { id: 33, name: 'מפלס לייזר Bosch GCL 2-50 G',           brand: 'בוש',      category: 'כלי עבודה',  rating: 4.8, reviews: 57,  desc: 'מפלס קווי ירוק עם קרן אנך ואופק',                                        image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&q=80', recommended: false, order: 33 },
+    { id: 34, name: 'מרטוא Makita HM0870C',                  brand: 'מקיטה',    category: 'כלי עבודה',  rating: 4.9, reviews: 49,  desc: 'מרטוא מקצועי 1100W לשבירת בטון וריצוף',                                  image: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=400&q=80', recommended: false, order: 34 },
+    { id: 35, name: 'מברגה פגישה Milwaukee M12 FDD',         brand: 'מילווקי',  category: 'כלי עבודה',  rating: 4.8, reviews: 36,  desc: 'מברגה קומפקטית 12V לעבודה במקומות צרים',                                 image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&q=80', recommended: false, order: 35 },
+    { id: 36, name: 'מדחס אוויר Nuair B2800B/50',            brand: 'נואייר',   category: 'כלי עבודה',  rating: 4.7, reviews: 27,  desc: 'מדחס 50 ליטר 2HP למסמרייה ופיצוץ',                                       image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&q=80', recommended: false, order: 36 },
+
+    // גבס (5)
+    { id: 37, name: 'גבס גיפוק 12.5 מ"מ רגיל',              brand: 'גיפוק',    category: 'גבס',        rating: 4.7, reviews: 44,  desc: 'לוח גבס סטנדרטי לקירות ותקרות פנים',                                     image: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=400&q=80', recommended: false, order: 37 },
+    { id: 38, name: 'גבס עמיד מים Knauf Aquapanel',          brand: 'קנאוף',    category: 'גבס',        rating: 4.8, reviews: 61,  desc: 'לוח צמנט לאזורים רטובים — מקלחות ובריכות',                               image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&q=80', recommended: true,  order: 38 },
+    { id: 39, name: 'טיח מוכן Knauf Rotband 30 ק"ג',        brand: 'קנאוף',    category: 'גבס',        rating: 4.8, reviews: 83,  desc: 'גבס טיח פרמיום לקירות ותקרות, כיסוי מעולה',                              image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01a3?w=400&q=80', recommended: true,  order: 39 },
+    { id: 40, name: 'גבס אש Knauf Fireboard',                brand: 'קנאוף',    category: 'גבס',        rating: 4.6, reviews: 22,  desc: 'לוח גבס עמיד אש F120 לתקנות אש',                                         image: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=400&q=80', recommended: false, order: 40 },
+    { id: 41, name: 'פרופיל CW 100 לגבס',                   brand: 'אמץ',      category: 'גבס',        rating: 4.5, reviews: 39,  desc: 'פרופיל מתכת 100מ"מ לבניית קירות גבס',                                    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80', recommended: false, order: 41 },
+
+    // חיבורים (4)
+    { id: 42, name: 'ברגי גבס 3.5×25 Fischer',              brand: 'פישר',     category: 'חיבורים',    rating: 4.6, reviews: 67,  desc: 'ברגי גבס פוספט, קצה חד, 200 יחידות בקופסה',                              image: 'https://images.unsplash.com/photo-1609205807107-2d5d00f17463?w=400&q=80', recommended: false, order: 42 },
+    { id: 43, name: 'עוגן כימי Fischer FIS V 360S',          brand: 'פישר',     category: 'חיבורים',    rating: 4.9, reviews: 31,  desc: 'עוגן כימי לבטון ובלוקים, מאושר תקן אירופי',                              image: 'https://images.unsplash.com/photo-1609205807107-2d5d00f17463?w=400&q=80', recommended: true,  order: 43 },
+    { id: 44, name: "דיבל פלסטיק SX8 Fischer 100 יח'",      brand: 'פישר',     category: 'חיבורים',    rating: 4.7, reviews: 88,  desc: 'דיבל אוניברסלי לבטון, לבנה ובלוק גבס',                                  image: 'https://images.unsplash.com/photo-1609205807107-2d5d00f17463?w=400&q=80', recommended: false, order: 44 },
+    { id: 45, name: 'ברגי אינוקס חיצוני Torx 5×60',         brand: 'פישר',     category: 'חיבורים',    rating: 4.6, reviews: 24,  desc: 'ברגי נירוסטה לעץ חיצוני, עמידים בחלודה',                                 image: 'https://images.unsplash.com/photo-1609205807107-2d5d00f17463?w=400&q=80', recommended: false, order: 45 }
   ];
 
   function starsHTML(rating) {

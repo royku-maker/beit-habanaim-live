@@ -233,6 +233,62 @@
     .whatsapp-float a:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,.3); }
     .whatsapp-float svg { width: 30px; height: 30px; fill: #fff; }
 
+    /* ── CALC PICKER GRID ── */
+    .calc-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .calc-picker-btn {
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: #fff;
+      border-radius: 16px;
+      padding: 22px 12px 18px;
+      cursor: pointer;
+      font-family: 'Heebo', sans-serif;
+      transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      backdrop-filter: blur(6px);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .calc-picker-btn .cpb-icon {
+      font-size: 38px;
+      line-height: 1;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .calc-picker-btn .cpb-label {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: 0.3px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    .calc-picker-btn:hover {
+      background: rgba(255,255,255,0.28);
+      border-color: rgba(255,255,255,0.8);
+      transform: translateY(-7px) scale(1.05);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.4);
+    }
+    .calc-picker-btn:hover .cpb-icon {
+      transform: scale(1.2) rotate(-6deg);
+    }
+    @media (max-width: 740px) {
+      .calc-picker-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    }
+    @media (max-width: 440px) {
+      .calc-picker-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .calc-picker-btn { padding: 14px 8px 12px; }
+      .calc-picker-btn .cpb-icon { font-size: 28px; }
+      .calc-picker-btn .cpb-label { font-size: 12px; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .hero h1 { font-size: 28px; }
@@ -265,9 +321,82 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <h1>מחשבון כמויות חומרי בניין</h1>
-  <p>חשב את הכמות הנכונה לפני שאתה קונה</p>
+<section style="background: linear-gradient(135deg, #0f1f4e 0%, #1a56db 60%, #2d7dd2 100%); padding: 80px 0 60px; text-align: center; position: relative; overflow: hidden;">
+  <!-- Decorative background circles -->
+  <div style="position:absolute;top:-80px;left:-80px;width:300px;height:300px;background:rgba(255,255,255,0.04);border-radius:50%;"></div>
+  <div style="position:absolute;bottom:-60px;right:-60px;width:250px;height:250px;background:rgba(255,255,255,0.04);border-radius:50%;"></div>
+
+  <div class="container" style="position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 24px;">
+    <div style="display:inline-block;background:rgba(255,255,255,0.15);color:#fff;font-size:13px;font-weight:600;padding:6px 20px;border-radius:20px;margin-bottom:24px;letter-spacing:1px;">כלי חישוב חינמי לקבלנים</div>
+    <h1 style="color:#fff;font-size:48px;font-weight:800;margin-bottom:16px;line-height:1.2;">מחשבון כמויות<br>חומרי בניין</h1>
+    <p style="color:rgba(255,255,255,0.85);font-size:20px;margin-bottom:48px;max-width:580px;margin-left:auto;margin-right:auto;">חשב בדיוק כמה חומר תצטרך לפני שאתה קונה — חוסך כסף, חוסך זמן, מונע עודפים</p>
+
+    <!-- 3 value props -->
+    <div style="display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;">
+      <div style="color:rgba(255,255,255,0.9);font-size:15px;display:flex;align-items:center;gap:8px;">
+        <span style="background:rgba(255,255,255,0.2);border-radius:50%;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;">⚡</span>
+        תוצאה תוך שניות
+      </div>
+      <div style="color:rgba(255,255,255,0.9);font-size:15px;display:flex;align-items:center;gap:8px;">
+        <span style="background:rgba(255,255,255,0.2);border-radius:50%;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;">🎯</span>
+        חישוב מדויק, סטייה של עד 10%
+      </div>
+      <div style="color:rgba(255,255,255,0.9);font-size:15px;display:flex;align-items:center;gap:8px;">
+        <span style="background:rgba(255,255,255,0.2);border-radius:50%;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;">📱</span>
+        עובד מהירות מהנייד
+      </div>
+    </div>
+
+    <!-- Calculator type picker cards -->
+    <p style="color:rgba(255,255,255,0.75);font-size:17px;font-weight:600;margin-bottom:24px;letter-spacing:0.5px;">מה תרצה לחשב?</p>
+    <div class="calc-picker-grid">
+      <button onclick="selectCalcFromHero('tiles')" class="calc-picker-btn"><span class="cpb-icon">🏠</span><span class="cpb-label">ריצוף רצפה</span></button>
+      <button onclick="selectCalcFromHero('wall-tiles')" class="calc-picker-btn"><span class="cpb-icon">🚿</span><span class="cpb-label">ריצוף קירות</span></button>
+      <button onclick="selectCalcFromHero('paint')" class="calc-picker-btn"><span class="cpb-icon">🎨</span><span class="cpb-label">צביעה</span></button>
+      <button onclick="selectCalcFromHero('plaster')" class="calc-picker-btn"><span class="cpb-icon">🧱</span><span class="cpb-label">טיח פנים</span></button>
+      <button onclick="selectCalcFromHero('facade')" class="calc-picker-btn"><span class="cpb-icon">🏢</span><span class="cpb-label">טיח חיצוני</span></button>
+      <button onclick="selectCalcFromHero('gypsum')" class="calc-picker-btn"><span class="cpb-icon">📋</span><span class="cpb-label">גבס</span></button>
+      <button onclick="selectCalcFromHero('concrete')" class="calc-picker-btn"><span class="cpb-icon">🏗️</span><span class="cpb-label">בטון</span></button>
+      <button onclick="selectCalcFromHero('blocks')" class="calc-picker-btn"><span class="cpb-icon">📦</span><span class="cpb-label">בלוקים</span></button>
+      <button onclick="selectCalcFromHero('stairs')" class="calc-picker-btn"><span class="cpb-icon">🪜</span><span class="cpb-label">מדרגות</span></button>
+      <button onclick="selectCalcFromHero('scaffolding')" class="calc-picker-btn"><span class="cpb-icon">🔧</span><span class="cpb-label">פיגומים</span></button>
+      <button onclick="selectCalcFromHero('steel')" class="calc-picker-btn"><span class="cpb-icon">🔩</span><span class="cpb-label">ברזל / שיריון</span></button>
+      <button onclick="selectCalcFromHero('project-cost')" class="calc-picker-btn"><span class="cpb-icon">💰</span><span class="cpb-label">עלות פרויקט</span></button>
+      <button onclick="selectCalcFromHero('openings')" class="calc-picker-btn"><span class="cpb-icon">🚪</span><span class="cpb-label">פתחים</span></button>
+      <button onclick="selectCalcFromHero('excavation')" class="calc-picker-btn"><span class="cpb-icon">⛏️</span><span class="cpb-label">חפירה ועפר</span></button>
+      <button onclick="selectCalcFromHero('fence')" class="calc-picker-btn"><span class="cpb-icon">🏡</span><span class="cpb-label">גדר חיצונית</span></button>
+    </div>
+
+    <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-top:24px;">↓ גלול למטה למחשבון המלא</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS strip -->
+<section style="background:#f8f9ff;border-bottom:1px solid #e8eaf6;padding:32px 0;">
+  <div class="container" style="max-width:1200px;margin:0 auto;padding:0 24px;">
+    <div style="display:flex;gap:0;justify-content:center;align-items:center;flex-wrap:wrap;">
+      <div style="text-align:center;padding:0 32px;border-left:1px solid #e0e4f0;">
+        <div style="font-size:28px;margin-bottom:6px;">1️⃣</div>
+        <div style="font-weight:700;font-size:15px;color:#1a1a1a;">בחר סוג עבודה</div>
+        <div style="color:#666;font-size:13px;">ריצוף, צביעה, בטון ועוד</div>
+      </div>
+      <div style="text-align:center;padding:0 32px;border-left:1px solid #e0e4f0;">
+        <div style="font-size:28px;margin-bottom:6px;">2️⃣</div>
+        <div style="font-weight:700;font-size:15px;color:#1a1a1a;">הכנס מידות</div>
+        <div style="color:#666;font-size:13px;">אורך, רוחב, גובה</div>
+      </div>
+      <div style="text-align:center;padding:0 32px;border-left:1px solid #e0e4f0;">
+        <div style="font-size:28px;margin-bottom:6px;">3️⃣</div>
+        <div style="font-weight:700;font-size:15px;color:#1a1a1a;">קבל תוצאה מיידית</div>
+        <div style="color:#666;font-size:13px;">כמות, אריזות, עלות</div>
+      </div>
+      <div style="text-align:center;padding:0 32px;">
+        <div style="font-size:28px;margin-bottom:6px;">4️⃣</div>
+        <div style="font-weight:700;font-size:15px;color:#1a1a1a;">הזמן בוואטסאפ</div>
+        <div style="color:#666;font-size:13px;">שלח בקשת מחיר מיד</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- CALCULATOR -->
@@ -280,9 +409,19 @@
     <div class="tabs">
       <button class="tab-btn active" data-tab="tiles">ריצוף</button>
       <button class="tab-btn" data-tab="paint">צביעה</button>
-      <button class="tab-btn" data-tab="plaster">טיח / גבס</button>
+      <button class="tab-btn" data-tab="plaster">טיח</button>
+      <button class="tab-btn" data-tab="gypsum">גבס</button>
       <button class="tab-btn" data-tab="concrete">בטון</button>
       <button class="tab-btn" data-tab="blocks">בלוקים</button>
+      <button class="tab-btn" data-tab="stairs">🪜 מדרגות</button>
+      <button class="tab-btn" data-tab="scaffolding">🏗️ פיגומים</button>
+      <button class="tab-btn" data-tab="steel">🔩 ברזל</button>
+      <button class="tab-btn" data-tab="project-cost">💰 עלות פרויקט</button>
+      <button class="tab-btn" data-tab="openings">🪟 פתחים</button>
+      <button class="tab-btn" data-tab="excavation">⛏️ חפירה</button>
+      <button class="tab-btn" data-tab="fence">🏡 גדר</button>
+      <button class="tab-btn" data-tab="wall-tiles">🚿 ריצוף קירות</button>
+      <button class="tab-btn" data-tab="facade">🏢 טיח חיצוני</button>
     </div>
 
     <div class="calc-card">
@@ -369,24 +508,78 @@
       <div class="tab-panel" id="tab-plaster">
         <div class="form-group">
           <label for="pl-area">שטח (מ"ר)</label>
-          <input type="number" id="pl-area" placeholder="לדוגמה: 20" min="0" step="0.1" />
+          <input type="number" id="pl-area" placeholder="לדוגמה: 40" min="0" step="0.1" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pl-thick">עובי שכבה (מ"מ)</label>
+            <select id="pl-thick">
+              <option value="5">5 מ"מ</option>
+              <option value="10" selected>10 מ"מ</option>
+              <option value="15">15 מ"מ</option>
+              <option value="20">20 מ"מ</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pl-type">סוג טיח</label>
+            <select id="pl-type">
+              <option value="1.5" selected>פנים (1.5 ק"ג/מ"מ/מ"ר)</option>
+              <option value="1.8">חוץ (1.8 ק"ג/מ"מ/מ"ר)</option>
+            </select>
+          </div>
         </div>
         <div class="form-group">
-          <label for="pl-thick">עובי שכבה (מ"מ)</label>
-          <select id="pl-thick">
-            <option value="5">5 מ"מ</option>
-            <option value="10" selected>10 מ"מ</option>
-            <option value="15">15 מ"מ</option>
-            <option value="20">20 מ"מ</option>
+          <label for="pl-coats">מספר שכבות</label>
+          <select id="pl-coats">
+            <option value="1" selected>שכבה אחת</option>
+            <option value="2">שתי שכבות</option>
           </select>
         </div>
         <button class="btn-calc" onclick="calcPlaster()">חשב</button>
         <div class="result-box" id="res-plaster">
           <h3>תוצאות החישוב</h3>
           <div class="result-item"><span class="label">ק"ג נדרשים</span><span class="value" id="r-pl-kg">–</span></div>
-          <div class="result-item"><span class="label">שקים (25 ק"ג לשק)</span><span class="value" id="r-pl-bags">–</span></div>
+          <div class="result-item"><span class="label">שקים 25 ק"ג</span><span class="value" id="r-pl-bags25">–</span></div>
+          <div class="result-item"><span class="label">שקים 40 ק"ג</span><span class="value" id="r-pl-bags40">–</span></div>
+          <div class="result-item"><span class="label">רשת חיזוק (מ"ר)</span><span class="value" id="r-pl-mesh">–</span></div>
         </div>
         <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם איש מקצוע</p>
+      </div>
+
+      <!-- ── GYPSUM ── -->
+      <div class="tab-panel" id="tab-gypsum">
+        <div class="form-group">
+          <label for="gy-area">שטח קיר / תקרה (מ"ר)</label>
+          <input type="number" id="gy-area" placeholder="לדוגמה: 30" min="0" step="0.1" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="gy-board">סוג לוח גבס</label>
+            <select id="gy-board">
+              <option value="3.12" selected>רגיל 12.5 מ"מ (1.2×2.6)</option>
+              <option value="3.12">עמיד לח 12.5 מ"מ</option>
+              <option value="3.12">אקוסטי 15 מ"מ</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="gy-layers">שכבות לוח</label>
+            <select id="gy-layers">
+              <option value="1" selected>שכבה אחת</option>
+              <option value="2">שתי שכבות</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-calc" onclick="calcGypsum()">חשב</button>
+        <div class="result-box" id="res-gypsum">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">לוחות גבס (כולל 10%)</span><span class="value" id="r-gy-boards">–</span></div>
+          <div class="result-item"><span class="label">פרופילי CD מ' (רצועות)</span><span class="value" id="r-gy-cd">–</span></div>
+          <div class="result-item"><span class="label">פרופילי UD מ' (מסגרת)</span><span class="value" id="r-gy-ud">–</span></div>
+          <div class="result-item"><span class="label">ברגים (TN25)</span><span class="value" id="r-gy-screws">–</span></div>
+          <div class="result-item"><span class="label">שקי מסט 20 ק"ג</span><span class="value" id="r-gy-compound">–</span></div>
+          <div class="result-item"><span class="label">מ' סרט תפרים</span><span class="value" id="r-gy-tape">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם קבלן גבס</p>
       </div>
 
       <!-- ── CONCRETE ── -->
@@ -444,6 +637,378 @@
           <div class="result-item"><span class="label">פלטות (40 בלוקים לפלטה)</span><span class="value" id="r-b-pallets">–</span></div>
         </div>
         <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם איש מקצוע</p>
+      </div>
+
+      <!-- ── STAIRS ── -->
+      <div class="tab-panel" id="tab-stairs">
+        <div class="form-row">
+          <label for="st-count">מספר מדרגות</label>
+          <input type="number" id="st-count" min="1" max="50" placeholder="לדוגמה: 12" />
+        </div>
+        <div class="form-row">
+          <label for="st-width">רוחב המדרגה (מ')</label>
+          <input type="number" id="st-width" min="0.5" max="5" step="0.1" placeholder="לדוגמה: 1.2" />
+        </div>
+        <div class="form-row">
+          <label for="st-tread">עומק הדריכה (ס"מ)</label>
+          <input type="number" id="st-tread" min="20" max="50" placeholder="לדוגמה: 30" />
+        </div>
+        <div class="form-row">
+          <label for="st-rise">גובה הבטיסה (ס"מ)</label>
+          <input type="number" id="st-rise" min="10" max="25" placeholder="לדוגמה: 17" />
+        </div>
+        <div class="form-row">
+          <label for="st-tile">גודל אריח מדרגה (ס"מ)</label>
+          <select id="st-tile">
+            <option value="0.12">30 × 120 ס"מ</option>
+            <option value="0.09" selected>30 × 90 ס"מ</option>
+            <option value="0.072">30 × 60 ס"מ</option>
+            <option value="0.09">33 × 33 ס"מ</option>
+          </select>
+        </div>
+        <button class="btn-calc" onclick="calcStairs()">חשב</button>
+        <div class="result-box" id="res-stairs">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">שטח דריכה כולל (מ"ר)</span><span class="value" id="r-st-tread-area">–</span></div>
+          <div class="result-item"><span class="label">שטח שיפה כולל (מ"ר)</span><span class="value" id="r-st-riser-area">–</span></div>
+          <div class="result-item"><span class="label">אריחי דריכה (כולל 10% פחת)</span><span class="value" id="r-st-tread-tiles">–</span></div>
+          <div class="result-item"><span class="label">אריחי שיפה (כולל 10% פחת)</span><span class="value" id="r-st-riser-tiles">–</span></div>
+          <div class="result-item"><span class="label">דבק אריחים (שקים 25 ק"ג)</span><span class="value" id="r-st-adhesive">–</span></div>
+          <div class="result-item"><span class="label">פוגה (ק"ג)</span><span class="value" id="r-st-grout">–</span></div>
+          <div class="result-item"><span class="label">פרופילי פינה (מטר)</span><span class="value" id="r-st-profiles">–</span></div>
+          <div class="result-item"><span class="label">נפח בטון לשלד (מ"ק)</span><span class="value" id="r-st-concrete">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם איש מקצוע</p>
+      </div>
+
+      <!-- ── SCAFFOLDING ── -->
+      <div class="tab-panel" id="tab-scaffolding">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="sc-length">אורך הקיר / הבניין (מ')</label>
+            <input type="number" id="sc-length" placeholder="לדוגמה: 12" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="sc-height">גובה הבניין (מ')</label>
+            <input type="number" id="sc-height" placeholder="לדוגמה: 8" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="sc-type">סוג פיגום</label>
+          <select id="sc-type">
+            <option value="frame">מסגרות (פריים)</option>
+            <option value="tube">קנים וחיבורים</option>
+          </select>
+        </div>
+        <button class="btn-calc" onclick="calcScaffolding()">חשב</button>
+        <div class="result-box" id="res-scaffolding">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">שטח פיגום (מ"ר)</span><span class="value" id="r-sc-area">–</span></div>
+          <div class="result-item"><span class="label">מספר שכבות (lifts)</span><span class="value" id="r-sc-lifts">–</span></div>
+          <div class="result-item"><span class="label">מסגרות / ספאנים</span><span class="value" id="r-sc-frames">–</span></div>
+          <div class="result-item"><span class="label">לוחות עץ</span><span class="value" id="r-sc-boards">–</span></div>
+          <div class="result-item"><span class="label">עמודים (standards)</span><span class="value" id="r-sc-standards">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם קבלן פיגומים</p>
+      </div>
+
+      <!-- ── STEEL ── -->
+      <div class="tab-panel" id="tab-steel">
+        <div class="form-group">
+          <label for="st2-area">שטח (מ"ר)</label>
+          <input type="number" id="st2-area" placeholder="לדוגמה: 50" min="0" step="0.1" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="st2-diam">קוטר מוט</label>
+            <select id="st2-diam">
+              <option value="0.888">12 מ"מ – 0.888 ק"ג/מ'</option>
+              <option value="1.578" selected>16 מ"מ – 1.578 ק"ג/מ'</option>
+              <option value="2.466">20 מ"מ – 2.466 ק"ג/מ'</option>
+              <option value="3.854">25 מ"מ – 3.854 ק"ג/מ'</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="st2-spacing">מרחק בין מוטות (ס"מ)</label>
+            <select id="st2-spacing">
+              <option value="10">10 ס"מ</option>
+              <option value="15" selected>15 ס"מ</option>
+              <option value="20">20 ס"מ</option>
+              <option value="25">25 ס"מ</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="st2-dir">כיוון רשת</label>
+          <select id="st2-dir">
+            <option value="1">חד-כיווני (שכבה אחת)</option>
+            <option value="2" selected>דו-כיווני (שתי שכבות)</option>
+          </select>
+        </div>
+        <button class="btn-calc" onclick="calcSteel()">חשב</button>
+        <div class="result-box" id="res-steel">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">מטרים ריצה כולל</span><span class="value" id="r-st2-meters">–</span></div>
+          <div class="result-item"><span class="label">משקל ברזל (ק"ג)</span><span class="value" id="r-st2-kg">–</span></div>
+          <div class="result-item"><span class="label">משקל ברזל (טון)</span><span class="value" id="r-st2-ton">–</span></div>
+          <div class="result-item"><span class="label">חבילות (~2 טון לחבילה)</span><span class="value" id="r-st2-bundles">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב כולל 10% חפיפה ובזבוז. מומלץ להתייעץ עם מהנדס</p>
+      </div>
+
+      <!-- ── PROJECT COST ── -->
+      <div class="tab-panel" id="tab-project-cost">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pc-materials">עלות חומרים (₪)</label>
+            <input type="number" id="pc-materials" placeholder="לדוגמה: 20000" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="pc-labor">עלות עבודה (₪)</label>
+            <input type="number" id="pc-labor" placeholder="לדוגמה: 15000" min="0" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pc-misc">הוצאות נלוות (₪)</label>
+            <input type="number" id="pc-misc" placeholder="לדוגמה: 2000" min="0" value="0" />
+          </div>
+          <div class="form-group">
+            <label for="pc-profit">% רווח רצוי</label>
+            <input type="number" id="pc-profit" placeholder="לדוגמה: 20" min="0" max="200" value="20" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="pc-vat">מע"מ</label>
+          <select id="pc-vat">
+            <option value="1.18" selected>כולל מע"מ 18%</option>
+            <option value="1">ללא מע"מ</option>
+          </select>
+        </div>
+        <button class="btn-calc" onclick="calcProjectCost()">חשב</button>
+        <div class="result-box" id="res-project-cost">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">סה"כ עלויות</span><span class="value" id="r-pc-total-cost">–</span></div>
+          <div class="result-item"><span class="label">רווח (₪)</span><span class="value" id="r-pc-profit-amount">–</span></div>
+          <div class="result-item"><span class="label">מחיר לפני מע"מ</span><span class="value" id="r-pc-before-vat">–</span></div>
+          <div class="result-item"><span class="label">מחיר ללקוח (כולל מע"מ)</span><span class="value" id="r-pc-final">–</span></div>
+          <div class="result-item"><span class="label">% רווח מהמחיר הסופי</span><span class="value" id="r-pc-margin">–</span></div>
+        </div>
+        <p class="disclaimer">מומלץ להוסיף רזרבה של 10-15% לעלויות בלתי צפויות</p>
+      </div>
+
+      <!-- ── OPENINGS ── -->
+      <div class="tab-panel" id="tab-openings">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="op-length">אורך הקיר (מ')</label>
+            <input type="number" id="op-length" placeholder="לדוגמה: 10" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="op-height">גובה הקיר (מ')</label>
+            <input type="number" id="op-height" placeholder="לדוגמה: 2.7" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="op-win-count">מספר חלונות</label>
+            <input type="number" id="op-win-count" placeholder="0" min="0" step="1" value="0" />
+          </div>
+          <div class="form-group">
+            <label for="op-win-size">גודל חלון (מ"ר)</label>
+            <input type="number" id="op-win-size" placeholder="לדוגמה: 1.8" min="0" step="0.1" value="1.8" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="op-door-count">מספר דלתות</label>
+            <input type="number" id="op-door-count" placeholder="0" min="0" step="1" value="0" />
+          </div>
+          <div class="form-group">
+            <label for="op-door-size">גודל דלת (מ"ר)</label>
+            <input type="number" id="op-door-size" placeholder="לדוגמה: 2.1" min="0" step="0.1" value="2.1" />
+          </div>
+        </div>
+        <button class="btn-calc" onclick="calcOpenings()">חשב</button>
+        <div class="result-box" id="res-openings">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">שטח קיר ברוטו</span><span class="value" id="r-op-gross">–</span></div>
+          <div class="result-item"><span class="label">שטח פתחים</span><span class="value" id="r-op-openings">–</span></div>
+          <div class="result-item"><span class="label">שטח נטו לעבודה</span><span class="value" id="r-op-net">–</span></div>
+          <div class="result-item"><span class="label">ליטרים צבע (2 שכבות)</span><span class="value" id="r-op-paint">–</span></div>
+          <div class="result-item"><span class="label">ק"ג טיח (10 מ"מ)</span><span class="value" id="r-op-plaster">–</span></div>
+          <div class="result-item"><span class="label">מ' אטם לפתחים</span><span class="value" id="r-op-sealant">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם איש מקצוע</p>
+      </div>
+
+      <!-- ── EXCAVATION ── -->
+      <div class="tab-panel" id="tab-excavation">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ex-length">אורך (מ')</label>
+            <input type="number" id="ex-length" placeholder="לדוגמה: 10" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="ex-width">רוחב (מ')</label>
+            <input type="number" id="ex-width" placeholder="לדוגמה: 6" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ex-depth">עומק חפירה (מ')</label>
+            <input type="number" id="ex-depth" placeholder="לדוגמה: 1.5" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="ex-transport">עלות הובלה (₪/מ"ק)</label>
+            <input type="number" id="ex-transport" placeholder="לדוגמה: 80" min="0" value="80" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ex-swell">סוג קרקע (מקדם תפיחה)</label>
+          <select id="ex-swell">
+            <option value="1.15">חול / אדמה קלה × 1.15</option>
+            <option value="1.25" selected>אדמה בינונית × 1.25</option>
+            <option value="1.35">אדמה כבדה / חרסית × 1.35</option>
+          </select>
+        </div>
+        <button class="btn-calc" onclick="calcExcavation()">חשב</button>
+        <div class="result-box" id="res-excavation">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">נפח חפירה (מ"ק)</span><span class="value" id="r-ex-vol">–</span></div>
+          <div class="result-item"><span class="label">נפח לאחר תפיחה (מ"ק)</span><span class="value" id="r-ex-swelled">–</span></div>
+          <div class="result-item"><span class="label">נסיעות משאית (18 מ"ק/נסיעה)</span><span class="value" id="r-ex-trucks">–</span></div>
+          <div class="result-item"><span class="label">עלות הובלה מוערכת (₪)</span><span class="value" id="r-ex-cost">–</span></div>
+        </div>
+        <p class="disclaimer">עלות בפועל תלויה בנגישות, ציוד, ומרחק פינוי</p>
+      </div>
+
+      <!-- ── FENCE ── -->
+      <div class="tab-panel" id="tab-fence">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fn-length">אורך גדר (מ')</label>
+            <input type="number" id="fn-length" placeholder="לדוגמה: 30" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="fn-height">גובה גדר (מ')</label>
+            <input type="number" id="fn-height" placeholder="לדוגמה: 1.8" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fn-block">סוג בלוק</label>
+          <select id="fn-block">
+            <option value="0.08">20 × 40 ס"מ</option>
+            <option value="0.06" selected>15 × 40 ס"מ</option>
+          </select>
+        </div>
+        <button class="btn-calc" onclick="calcFence()">חשב</button>
+        <div class="result-box" id="res-fence">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">שטח קיר (מ"ר)</span><span class="value" id="r-fn-area">–</span></div>
+          <div class="result-item"><span class="label">מספר בלוקים (כולל 5%)</span><span class="value" id="r-fn-blocks">–</span></div>
+          <div class="result-item"><span class="label">שקי מלט לחיבורים</span><span class="value" id="r-fn-mortar">–</span></div>
+          <div class="result-item"><span class="label">נפח בטון לביסוס (מ"ק)</span><span class="value" id="r-fn-foundation">–</span></div>
+          <div class="result-item"><span class="label">מ"ר טיח (שני פנים)</span><span class="value" id="r-fn-plaster">–</span></div>
+          <div class="result-item"><span class="label">עמודי ביניים (כל 3 מ')</span><span class="value" id="r-fn-posts">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב הוא הערכה בלבד. מומלץ להתייעץ עם קבלן</p>
+      </div>
+
+      <!-- ── WALL TILES ── -->
+      <div class="tab-panel" id="tab-wall-tiles">
+        <div class="form-group">
+          <label for="wt-perimeter">היקף החדר (מ') — סכום כל הקירות</label>
+          <input type="number" id="wt-perimeter" placeholder="לדוגמה: 12" min="0" step="0.1" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="wt-height">גובה הריצוף (מ')</label>
+            <input type="number" id="wt-height" placeholder="לדוגמה: 2.4" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="wt-size">גודל אריח קיר</label>
+            <select id="wt-size">
+              <option value="0.09">30 × 30 ס"מ</option>
+              <option value="0.12">30 × 40 ס"מ</option>
+              <option value="0.16" selected>40 × 40 ס"מ</option>
+              <option value="0.20">40 × 50 ס"מ</option>
+              <option value="0.36">60 × 60 ס"מ</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="wt-openings">מספר פתחים (חלונות/דלתות)</label>
+            <input type="number" id="wt-openings" placeholder="0" min="0" step="1" value="0" />
+          </div>
+          <div class="form-group">
+            <label for="wt-opening-size">גודל פתח ממוצע (מ"ר)</label>
+            <input type="number" id="wt-opening-size" placeholder="לדוגמה: 1.8" min="0" step="0.1" value="1.8" />
+          </div>
+        </div>
+        <button class="btn-calc" onclick="calcWallTiles()">חשב</button>
+        <div class="result-box" id="res-wall-tiles">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">שטח ברוטו (מ"ר)</span><span class="value" id="r-wt-gross">–</span></div>
+          <div class="result-item"><span class="label">שטח פתחים (מ"ר)</span><span class="value" id="r-wt-openings">–</span></div>
+          <div class="result-item"><span class="label">שטח נטו לריצוף (מ"ר)</span><span class="value" id="r-wt-net">–</span></div>
+          <div class="result-item"><span class="label">אריחים (כולל 15% פחת וחיתוכים)</span><span class="value" id="r-wt-tiles">–</span></div>
+          <div class="result-item"><span class="label">קרטונים (4 אריח/קרטון)</span><span class="value" id="r-wt-boxes">–</span></div>
+          <div class="result-item"><span class="label">דבק אריחים (שקים 25 ק"ג)</span><span class="value" id="r-wt-adhesive">–</span></div>
+          <div class="result-item"><span class="label">פוגה (ק"ג)</span><span class="value" id="r-wt-grout">–</span></div>
+        </div>
+        <p class="disclaimer">ריצוף קירות דורש 15% פחת בגלל חיתוכי פינות ופתחים. מומלץ להתייעץ עם קרמיקאי</p>
+      </div>
+
+      <!-- ── FACADE / EXTERIOR PLASTER ── -->
+      <div class="tab-panel" id="tab-facade">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fa-width">רוחב החזית (מ')</label>
+            <input type="number" id="fa-width" placeholder="לדוגמה: 12" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label for="fa-floors">מספר קומות</label>
+            <input type="number" id="fa-floors" placeholder="לדוגמה: 4" min="1" step="1" value="1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fa-floor-height">גובה קומה (מ')</label>
+            <input type="number" id="fa-floor-height" placeholder="לדוגמה: 3" min="0" step="0.1" value="3" />
+          </div>
+          <div class="form-group">
+            <label for="fa-windows">מספר חלונות לקומה</label>
+            <input type="number" id="fa-windows" placeholder="לדוגמה: 3" min="0" step="1" value="0" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fa-win-size">גודל חלון ממוצע (מ"ר)</label>
+            <input type="number" id="fa-win-size" placeholder="לדוגמה: 1.8" min="0" step="0.1" value="1.8" />
+          </div>
+          <div class="form-group">
+            <label for="fa-finish">סוג גימור</label>
+            <select id="fa-finish">
+              <option value="smooth">חלק (אמלץ / אקו-פריים)</option>
+              <option value="moroccan" selected>מרוקאי עדין</option>
+              <option value="rough">מרוקאי גס (טרס)</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-calc" onclick="calcFacade()">חשב</button>
+        <div class="result-box" id="res-facade">
+          <h3>תוצאות החישוב</h3>
+          <div class="result-item"><span class="label">שטח חזית ברוטו (מ"ר)</span><span class="value" id="r-fa-gross">–</span></div>
+          <div class="result-item"><span class="label">שטח פתחים (מ"ר)</span><span class="value" id="r-fa-openings">–</span></div>
+          <div class="result-item"><span class="label">שטח נטו לטיח (מ"ר)</span><span class="value" id="r-fa-net">–</span></div>
+          <div class="result-item"><span class="label">שכבת בסיס — שקים 25 ק"ג</span><span class="value" id="r-fa-base">–</span></div>
+          <div class="result-item"><span class="label">שכבת גימור — שקים 25 ק"ג</span><span class="value" id="r-fa-finish">–</span></div>
+          <div class="result-item"><span class="label">רשת חיזוק (מ"ר)</span><span class="value" id="r-fa-mesh">–</span></div>
+          <div class="result-item"><span class="label">סה"כ שקים</span><span class="value" id="r-fa-total">–</span></div>
+        </div>
+        <p class="disclaimer">החישוב כולל 10% עודף. מרוקאי גס דורש שכבה עבה יותר. מומלץ לבקש הצעת מחיר ממומחה חזיתות</p>
       </div>
 
     </div><!-- /calc-card -->
@@ -536,15 +1101,51 @@
 
   // ── PLASTER ──
   function calcPlaster() {
-    const area = parseFloat(document.getElementById('pl-area').value) || 0;
+    const area  = parseFloat(document.getElementById('pl-area').value)  || 0;
     const thick = parseFloat(document.getElementById('pl-thick').value) || 10;
+    const kgFactor = parseFloat(document.getElementById('pl-type').value);
+    const coats = parseInt(document.getElementById('pl-coats').value)   || 1;
 
-    const kg = area * thick * 1.5;
-    const bags = Math.ceil(kg / 25);
+    const kg     = area * thick * kgFactor * coats;
+    const bags25 = Math.ceil(kg / 25);
+    const bags40 = Math.ceil(kg / 40);
+    const isExterior = kgFactor > 1.5;
+    const meshArea = isExterior ? fmt(area * coats) + ' מ"ר' : 'לא נדרש';
 
-    document.getElementById('r-pl-kg').textContent = fmt(kg, 0) + ' ק"ג';
-    document.getElementById('r-pl-bags').textContent = fmt(bags, 0) + ' שקים';
+    document.getElementById('r-pl-kg').textContent     = fmt(kg, 0) + ' ק"ג';
+    document.getElementById('r-pl-bags25').textContent = bags25 + ' שקים';
+    document.getElementById('r-pl-bags40').textContent = bags40 + ' שקים';
+    document.getElementById('r-pl-mesh').textContent   = meshArea;
     showResult('res-plaster');
+  }
+
+  // ── GYPSUM ──
+  function calcGypsum() {
+    const area      = parseFloat(document.getElementById('gy-area').value)   || 0;
+    const boardArea = parseFloat(document.getElementById('gy-board').value)  || 3.12; // m² per board (1.2×2.6)
+    const layers    = parseInt(document.getElementById('gy-layers').value)   || 1;
+
+    // Boards with 10% waste
+    const boards  = Math.ceil((area * layers / boardArea) * 1.10);
+    // CD profiles every 60cm → running meters ≈ area / 0.6, each bar = 3m
+    const cdBars  = Math.ceil(area / 0.6);
+    const cdMeters = cdBars * 3;
+    // UD perimeter frame: sqrt(area)×4 per layer + 10%
+    const udMeters = Math.ceil(Math.sqrt(area) * 4 * layers * 1.10);
+    // Screws: ~30 per board
+    const screws  = boards * 30;
+    // Joint compound (מסט): 1 bag (20kg) per 25m², 3 coats → ceil(area/25)*3
+    const compound = Math.ceil((area / 25) * 3);
+    // Joint tape: 1.2m per m²
+    const tape    = Math.ceil(area * 1.2);
+
+    document.getElementById('r-gy-boards').textContent   = boards + ' לוחות';
+    document.getElementById('r-gy-cd').textContent       = cdMeters + " מ'";
+    document.getElementById('r-gy-ud').textContent       = udMeters + " מ'";
+    document.getElementById('r-gy-screws').textContent   = screws + ' ברגים';
+    document.getElementById('r-gy-compound').textContent = compound + ' שקים';
+    document.getElementById('r-gy-tape').textContent     = tape + " מ'";
+    showResult('res-gypsum');
   }
 
   // ── CONCRETE ──
@@ -583,6 +1184,284 @@
     document.getElementById('r-b-pallets').textContent = fmt(pallets, 0) + ' פלטות';
     showResult('res-blocks');
   }
+
+  function calcStairs() {
+    const count  = parseFloat(document.getElementById('st-count').value)  || 0;
+    const width  = parseFloat(document.getElementById('st-width').value)  || 0;
+    const tread  = parseFloat(document.getElementById('st-tread').value)  / 100 || 0; // cm→m
+    const rise   = parseFloat(document.getElementById('st-rise').value)   / 100 || 0; // cm→m
+    const tileArea = parseFloat(document.getElementById('st-tile').value) || 0.09;    // m² per tile
+
+    // Areas
+    const treadArea  = count * width * tread;           // דריכה
+    const riserArea  = count * width * rise;            // שיפה (חזית)
+    const totalArea  = treadArea + riserArea;
+
+    // Tiles (with 10% waste)
+    const treadTiles = Math.ceil((treadArea * 1.10) / tileArea);
+    const riserTiles = Math.ceil((riserArea * 1.10) / tileArea);
+
+    // Adhesive: ~5 kg per m², 25kg bags
+    const adhesiveKg   = Math.ceil(totalArea * 5);
+    const adhesiveBags = Math.ceil(adhesiveKg / 25);
+
+    // Grout: ~0.5 kg per m²
+    const groutKg = Math.ceil(totalArea * 0.5);
+
+    // Corner profiles: one per step leading edge = count × width
+    const profiles = (count * width).toFixed(1);
+
+    // Concrete: rough estimate for stair slab 15cm thick
+    const concrete = ((count * width * tread * rise * 0.5) * 1.15).toFixed(2); // triangular cross-section + 15%
+
+    document.getElementById('r-st-tread-area').textContent  = fmt(treadArea) + ' מ"ר';
+    document.getElementById('r-st-riser-area').textContent  = fmt(riserArea) + ' מ"ר';
+    document.getElementById('r-st-tread-tiles').textContent = treadTiles + ' אריחים';
+    document.getElementById('r-st-riser-tiles').textContent = riserTiles + ' אריחים';
+    document.getElementById('r-st-adhesive').textContent    = adhesiveBags + ' שקים';
+    document.getElementById('r-st-grout').textContent       = groutKg + ' ק"ג';
+    document.getElementById('r-st-profiles').textContent    = profiles + ' מ\'';
+    document.getElementById('r-st-concrete').textContent    = concrete + ' מ"ק';
+    showResult('res-stairs');
+  }
+
+  // ── SCAFFOLDING ──
+  function calcScaffolding() {
+    const length = parseFloat(document.getElementById('sc-length').value) || 0;
+    const height = parseFloat(document.getElementById('sc-height').value) || 0;
+    const type   = document.getElementById('sc-type').value;
+
+    const area  = length * height;
+    const lifts = Math.ceil(height / 2);
+
+    let frames, standards, boards;
+    if (type === 'frame') {
+      const bays = Math.ceil(length / 2.57);
+      frames    = bays * lifts;
+      standards = (bays + 1) * 2;
+      boards    = bays * 3 * lifts;
+    } else {
+      const bays = Math.ceil(length / 1.8);
+      frames    = bays * lifts;
+      standards = (bays + 1) * 2 * lifts;
+      boards    = bays * 3 * lifts;
+    }
+
+    document.getElementById('r-sc-area').textContent      = fmt(area) + ' מ"ר';
+    document.getElementById('r-sc-lifts').textContent     = lifts + ' שכבות';
+    document.getElementById('r-sc-frames').textContent    = frames + (type === 'frame' ? ' מסגרות' : ' ספאנים');
+    document.getElementById('r-sc-boards').textContent    = boards + ' לוחות';
+    document.getElementById('r-sc-standards').textContent = standards + ' עמודים';
+    showResult('res-scaffolding');
+  }
+
+  // ── STEEL ──
+  function calcSteel() {
+    const area      = parseFloat(document.getElementById('st2-area').value)    || 0;
+    const kgPerM    = parseFloat(document.getElementById('st2-diam').value);
+    const spacing   = parseFloat(document.getElementById('st2-spacing').value);
+    const dirs      = parseInt(document.getElementById('st2-dir').value);
+
+    const barsPerM  = 100 / spacing;
+    const totalM    = Math.ceil(area * barsPerM * dirs * 1.10);
+    const totalKg   = Math.ceil(totalM * kgPerM);
+    const totalTon  = (totalKg / 1000).toFixed(2);
+    const bundles   = Math.ceil(totalKg / 2000);
+
+    document.getElementById('r-st2-meters').textContent  = fmt(totalM, 0) + " מ'";
+    document.getElementById('r-st2-kg').textContent      = fmt(totalKg, 0) + ' ק"ג';
+    document.getElementById('r-st2-ton').textContent     = totalTon + ' טון';
+    document.getElementById('r-st2-bundles').textContent = bundles + ' חבילות';
+    showResult('res-steel');
+  }
+
+  // ── PROJECT COST ──
+  function calcProjectCost() {
+    const materials  = parseFloat(document.getElementById('pc-materials').value) || 0;
+    const labor      = parseFloat(document.getElementById('pc-labor').value)     || 0;
+    const misc       = parseFloat(document.getElementById('pc-misc').value)      || 0;
+    const profitPct  = parseFloat(document.getElementById('pc-profit').value)    || 0;
+    const vatMult    = parseFloat(document.getElementById('pc-vat').value);
+
+    const totalCost     = materials + labor + misc;
+    const profitAmount  = Math.round(totalCost * (profitPct / 100));
+    const beforeVat     = totalCost + profitAmount;
+    const finalPrice    = Math.round(beforeVat * vatMult);
+    const marginPct     = finalPrice > 0 ? ((profitAmount / finalPrice) * 100).toFixed(1) : '0';
+
+    document.getElementById('r-pc-total-cost').textContent    = '₪' + fmt(totalCost, 0);
+    document.getElementById('r-pc-profit-amount').textContent = '₪' + fmt(profitAmount, 0);
+    document.getElementById('r-pc-before-vat').textContent    = '₪' + fmt(beforeVat, 0);
+    document.getElementById('r-pc-final').textContent         = '₪' + fmt(finalPrice, 0);
+    document.getElementById('r-pc-margin').textContent        = marginPct + '%';
+    showResult('res-project-cost');
+  }
+
+  // ── OPENINGS ──
+  function calcOpenings() {
+    const length    = parseFloat(document.getElementById('op-length').value)     || 0;
+    const height    = parseFloat(document.getElementById('op-height').value)     || 0;
+    const winCount  = parseFloat(document.getElementById('op-win-count').value)  || 0;
+    const winSize   = parseFloat(document.getElementById('op-win-size').value)   || 0;
+    const doorCount = parseFloat(document.getElementById('op-door-count').value) || 0;
+    const doorSize  = parseFloat(document.getElementById('op-door-size').value)  || 0;
+
+    const grossArea    = length * height;
+    const openingsArea = (winCount * winSize) + (doorCount * doorSize);
+    const netArea      = Math.max(0, grossArea - openingsArea);
+    const paintLiters  = Math.ceil(netArea / 5);
+    const plasterKg    = Math.ceil(netArea * 10 * 1.5);
+    const sealantM     = Math.ceil((winCount + doorCount) * 6);
+
+    document.getElementById('r-op-gross').textContent    = fmt(grossArea) + ' מ"ר';
+    document.getElementById('r-op-openings').textContent = fmt(openingsArea) + ' מ"ר';
+    document.getElementById('r-op-net').textContent      = fmt(netArea) + ' מ"ר';
+    document.getElementById('r-op-paint').textContent    = paintLiters + ' ליטר';
+    document.getElementById('r-op-plaster').textContent  = fmt(plasterKg, 0) + ' ק"ג';
+    document.getElementById('r-op-sealant').textContent  = sealantM + " מ'";
+    showResult('res-openings');
+  }
+
+  // ── EXCAVATION ──
+  function calcExcavation() {
+    const length    = parseFloat(document.getElementById('ex-length').value)    || 0;
+    const width     = parseFloat(document.getElementById('ex-width').value)     || 0;
+    const depth     = parseFloat(document.getElementById('ex-depth').value)     || 0;
+    const transport = parseFloat(document.getElementById('ex-transport').value) || 0;
+    const swell     = parseFloat(document.getElementById('ex-swell').value);
+
+    const vol        = length * width * depth;
+    const swelledVol = parseFloat((vol * swell).toFixed(2));
+    const trucks     = Math.ceil(swelledVol / 18);
+    const cost       = Math.round(swelledVol * transport);
+
+    document.getElementById('r-ex-vol').textContent     = fmt(vol) + ' מ"ק';
+    document.getElementById('r-ex-swelled').textContent = fmt(swelledVol) + ' מ"ק';
+    document.getElementById('r-ex-trucks').textContent  = trucks + ' נסיעות';
+    document.getElementById('r-ex-cost').textContent    = '₪' + fmt(cost, 0);
+    showResult('res-excavation');
+  }
+
+  // ── FENCE ──
+  function calcFence() {
+    const length    = parseFloat(document.getElementById('fn-length').value) || 0;
+    const height    = parseFloat(document.getElementById('fn-height').value) || 0;
+    const blockArea = parseFloat(document.getElementById('fn-block').value);
+
+    const wallArea      = length * height;
+    const blocks        = Math.ceil((wallArea / blockArea) * 1.05);
+    const mortarBags    = Math.ceil(blocks / 20);
+    const foundationVol = parseFloat((length * 0.3 * 0.4).toFixed(2));
+    const plasterArea   = wallArea * 2;
+    const posts         = Math.ceil(length / 3) + 1;
+
+    document.getElementById('r-fn-area').textContent       = fmt(wallArea) + ' מ"ר';
+    document.getElementById('r-fn-blocks').textContent     = fmt(blocks, 0) + ' בלוקים';
+    document.getElementById('r-fn-mortar').textContent     = mortarBags + ' שקים';
+    document.getElementById('r-fn-foundation').textContent = foundationVol + ' מ"ק';
+    document.getElementById('r-fn-plaster').textContent    = fmt(plasterArea) + ' מ"ר';
+    document.getElementById('r-fn-posts').textContent      = posts + ' עמודים';
+    showResult('res-fence');
+  }
+
+  // ── WALL TILES ──
+  function calcWallTiles() {
+    const perimeter   = parseFloat(document.getElementById('wt-perimeter').value)     || 0;
+    const height      = parseFloat(document.getElementById('wt-height').value)        || 0;
+    const tileArea    = parseFloat(document.getElementById('wt-size').value)          || 0.16;
+    const openings    = parseFloat(document.getElementById('wt-openings').value)      || 0;
+    const openingSize = parseFloat(document.getElementById('wt-opening-size').value)  || 0;
+
+    const gross      = perimeter * height;
+    const openArea   = openings * openingSize;
+    const net        = Math.max(0, gross - openArea);
+    // 15% waste for wall tiles (corners, cuts)
+    const tiles      = Math.ceil((net / tileArea) * 1.15);
+    const boxes      = Math.ceil(tiles / 4);
+    // Adhesive: 5 kg/m², 25 kg bags
+    const adhesiveBags = Math.ceil((net * 5) / 25);
+    // Grout: 0.5 kg/m²
+    const groutKg    = Math.ceil(net * 0.5);
+
+    document.getElementById('r-wt-gross').textContent    = fmt(gross) + ' מ"ר';
+    document.getElementById('r-wt-openings').textContent = fmt(openArea) + ' מ"ר';
+    document.getElementById('r-wt-net').textContent      = fmt(net) + ' מ"ר';
+    document.getElementById('r-wt-tiles').textContent    = tiles + ' אריחים';
+    document.getElementById('r-wt-boxes').textContent    = boxes + ' קרטונים';
+    document.getElementById('r-wt-adhesive').textContent = adhesiveBags + ' שקים';
+    document.getElementById('r-wt-grout').textContent    = groutKg + ' ק"ג';
+    showResult('res-wall-tiles');
+  }
+
+  // ── FACADE / EXTERIOR PLASTER ──
+  function calcFacade() {
+    const width       = parseFloat(document.getElementById('fa-width').value)       || 0;
+    const floors      = parseFloat(document.getElementById('fa-floors').value)      || 1;
+    const floorH      = parseFloat(document.getElementById('fa-floor-height').value)|| 3;
+    const windows     = parseFloat(document.getElementById('fa-windows').value)     || 0;
+    const winSize     = parseFloat(document.getElementById('fa-win-size').value)    || 0;
+    const finish      = document.getElementById('fa-finish').value;
+
+    const totalH      = floors * floorH;
+    const gross       = width * totalH;
+    const openArea    = windows * floors * winSize;
+    const net         = Math.max(0, gross - openArea);
+
+    // kg per m² per mm thickness: exterior ~1.8 kg/mm/m²
+    // Base coat 10mm + finish coat thickness depends on type
+    const finishKgPerM2 = finish === 'smooth' ? 12 : finish === 'moroccan' ? 18 : 25; // total kg/m²
+    const baseKgPerM2   = 15; // base scratch coat always ~15 kg/m²
+
+    const baseBags      = Math.ceil((net * baseKgPerM2 * 1.10) / 25);
+    const finishBags    = Math.ceil((net * finishKgPerM2 * 1.10) / 25);
+    const meshArea      = fmt(net * 1.10);
+    const totalBags     = baseBags + finishBags;
+
+    document.getElementById('r-fa-gross').textContent    = fmt(gross) + ' מ"ר';
+    document.getElementById('r-fa-openings').textContent = fmt(openArea) + ' מ"ר';
+    document.getElementById('r-fa-net').textContent      = fmt(net) + ' מ"ר';
+    document.getElementById('r-fa-base').textContent     = baseBags + ' שקים';
+    document.getElementById('r-fa-finish').textContent   = finishBags + ' שקים';
+    document.getElementById('r-fa-mesh').textContent     = meshArea + ' מ"ר';
+    document.getElementById('r-fa-total').textContent    = totalBags + ' שקים';
+    showResult('res-facade');
+  }
+</script>
+
+<script>
+  // ── HERO CALCULATOR PICKER ──
+  function selectCalcFromHero(calcType) {
+    // Map calc type to tab data attribute
+    var tabMap = { tiles: 'tiles', 'wall-tiles': 'wall-tiles', paint: 'paint', plaster: 'plaster', facade: 'facade', gypsum: 'gypsum', concrete: 'concrete', blocks: 'blocks', stairs: 'stairs', scaffolding: 'scaffolding', steel: 'steel', 'project-cost': 'project-cost', openings: 'openings', excavation: 'excavation', fence: 'fence' };
+    var tabKey = tabMap[calcType] || 'tiles';
+
+    // Find the matching tab button and click it
+    var tabBtn = document.querySelector('.tab-btn[data-tab="' + tabKey + '"]');
+    if (tabBtn) {
+      tabBtn.click();
+    }
+
+    // Scroll down to the calculator section
+    setTimeout(function() {
+      var target = document.querySelector('.calc-card') ||
+                   document.querySelector('.calc-section');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  // Hover effects on hero calculator buttons (JS fallback for browsers without :hover on touch)
+  document.querySelectorAll('.calc-hero-btn').forEach(function(btn) {
+    btn.addEventListener('mouseenter', function() {
+      this.style.background = 'rgba(255,255,255,0.25)';
+      this.style.borderColor = 'rgba(255,255,255,0.7)';
+      this.style.transform = 'translateY(-4px) scale(1.05)';
+    });
+    btn.addEventListener('mouseleave', function() {
+      this.style.background = 'rgba(255,255,255,0.12)';
+      this.style.borderColor = 'rgba(255,255,255,0.3)';
+      this.style.transform = '';
+    });
+  });
 </script>
 </body>
 </html>
